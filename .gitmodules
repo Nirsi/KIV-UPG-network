@@ -1,0 +1,3 @@
+[submodule "src/water-network"]
+	path = src/water-network
+	url = git@gitlab.com:besoft/water-network.git
