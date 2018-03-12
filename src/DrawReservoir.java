@@ -28,7 +28,7 @@ public class DrawReservoir
         wWidth -= width;
         wHeight -= height;
 
-        AffineTransform at = g.getTransform();
+        AffineTransform baseTransform = g.getTransform();
 
         g.translate(reservoir.position.getX() / 100 * wWidth, reservoir.position.getY() / 100 * wHeight);
 
@@ -37,10 +37,18 @@ public class DrawReservoir
         g.setColor(BLUE);
         g.fillRect(0,0,width,(int)(reservoir.content / reservoir.capacity * height));
 
-        //ne woda
+        //Obal
         g.setColor(BLACK);
         g.drawRect(0,0,width,height);
 
-        g.setTransform(at);
+        g.setTransform(baseTransform);
+
+        //Pipes
+
+
+
+
+
+
     }
 }
