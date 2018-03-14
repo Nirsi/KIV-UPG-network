@@ -8,8 +8,8 @@ public class DrawReservoir
 {
     private Graphics2D g;
 
-    private int height = 100;
-    private int width = 100;
+    private int height = 180;
+    private int width = 180;
 
 
 
