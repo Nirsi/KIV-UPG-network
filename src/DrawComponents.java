@@ -22,6 +22,7 @@ public class DrawComponents extends JPanel
         DrawPipes dp = new DrawPipes(g2);
 
 
+
         for (NetworkNode Nn : wn.getAllNetworkNodes())
         {
             if (Nn instanceof Reservoir)
@@ -29,10 +30,13 @@ public class DrawComponents extends JPanel
 
         }
 
+
         for (Pipe p : wn.getAllPipes())
         {
-            dp.draw(p);
+            dp.draw(p, getWidth(), getHeight());
         }
+
+
 
     }
 
