@@ -12,13 +12,15 @@ public class DrawComponents extends JPanel
 
 
     @Override
-    public void paintComponent(Graphics gOld)
+    public void paintComponent(Graphics g)
     {
-        super.paintComponent(gOld);
-        Graphics2D g = (Graphics2D)gOld;
+        super.paintComponent(g);
+        Graphics2D g2 = (Graphics2D)g;
 
 
-        DrawReservoir dr = new DrawReservoir(g);
+        DrawReservoir dr = new DrawReservoir(g2);
+        DrawPipes dp = new DrawPipes(g2);
+
 
 
         for (NetworkNode Nn : wn.getAllNetworkNodes())
@@ -27,6 +29,14 @@ public class DrawComponents extends JPanel
                 dr.draw((Reservoir) Nn, getWidth(), getHeight());
 
         }
+
+
+        for (Pipe p : wn.getAllPipes())
+        {
+            dp.draw(p, getWidth(), getHeight());
+        }
+
+
 
     }
 
