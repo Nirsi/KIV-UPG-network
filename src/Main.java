@@ -3,7 +3,7 @@ import java.awt.*;
 
 public class Main
 {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         WaterNetwork waterNetwork = new WaterNetwork();
 
         JFrame frame = new JFrame();
@@ -18,5 +18,6 @@ public class Main
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
+        //runSimulation(waterNetwork);
     }
 }
