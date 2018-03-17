@@ -1,3 +1,5 @@
+import sun.nio.ch.Net;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -20,6 +22,7 @@ public class DrawComponents extends JPanel
 
         DrawReservoir dr = new DrawReservoir(g2);
         DrawPipes dp = new DrawPipes(g2);
+        DrawNodes dn = new DrawNodes(g2);
 
 
 
@@ -36,6 +39,11 @@ public class DrawComponents extends JPanel
             dp.draw(p, getWidth(), getHeight());
         }
 
+        for (NetworkNode nn : wn.getAllNetworkNodes())
+        {
+            if (!(nn instanceof Reservoir))
+                dn.draw(nn, getWidth(),getHeight());
+        }
 
 
     }
