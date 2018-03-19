@@ -22,7 +22,7 @@ public class DrawNodes
     public void draw(NetworkNode node, int width, int height)
     {
         drawNode(node, new Color(50, 50, 50),width,height);
-        drawNode(node, new Color(64, 164, 223),width,height);
+        drawNode(node, Color.BLUE,width,height);
     }
 
     /**
