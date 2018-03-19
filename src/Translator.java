@@ -29,6 +29,7 @@ public class Translator
         return realHeight / virtualHeight * y;
     }
 
+    @Deprecated
     public Point2D getRealCoords(Point2D virtualPosition)
     {
         return new Point2D.Double(realWidth / virtualWidth * virtualPosition.getX(), realWidth / virtualWidth * virtualPosition.getY());

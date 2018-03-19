@@ -10,34 +10,10 @@ public class DrawReservoir {
         this.g = g;
     }
 
-//    public void draw(Reservoir reservoir, int wWidth, int wHeight)
-//    {
-//        wWidth -= width;
-//        wHeight -= height;
 //
-//        AffineTransform baseTransform = g.getTransform();
-//
-//        g.translate(reservoir.position.getX() / 100 * wWidth, reservoir.position.getY() / 100 * wHeight);
-//
-//        //Woda
-//        g.rotate(Math.toRadians(180), width / 2, height / 2);
-//        g.setColor(BLUE);
-//        g.fillRect(0,0,width,(int)(reservoir.content / reservoir.capacity * height));
-//
-//        //Obal
-//        g.setColor(BLACK);
-//        g.drawRect(0,0,width,height);
-//
-//        g.setTransform(baseTransform);
-//    }
 
     public void draw(Reservoir reservoir, int width, int height) {
         AffineTransform at = g.getTransform();
-        int widthA = width;
-        int heightA = height;
-
-//        System.out.println("width / widthA: " + width + "/" + widthA);
-//        System.out.println("X: "+ (reservoir.position.getX() - widthA) + " Y: " + (reservoir.position.getY() - heightA));
 
         g.translate(
                 Translator.getInstance().getRealX(reservoir.position.getX()),

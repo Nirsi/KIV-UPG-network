@@ -38,12 +38,8 @@ public class DrawValves {
                 valveHeight);
 
         g.setColor(Color.BLACK);
-
         g.setClip(c);
-
-
     }
-
     private void computeVector(Pipe pipe) {
         vector = new Point2D.Double(
                 pipe.end.position.getX() - pipe.start.position.getX(),

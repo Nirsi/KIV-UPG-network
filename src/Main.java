@@ -18,14 +18,12 @@ public class Main
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        //runSimulation(waterNetwork);
-
         while (true)
         {
-            waterNetwork.updateState();	//updateState of the system
+            waterNetwork.updateState();
             dc.repaint();
 
-            Thread.sleep(20);	//small delay
+            Thread.sleep(20);
         }
     }
 }

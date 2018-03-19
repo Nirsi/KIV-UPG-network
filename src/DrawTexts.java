@@ -11,8 +11,6 @@ public class DrawTexts {
     Point2D arrowStart;
     Point2D arrowEnd;
     Point2D normalVector;
-    Point2D normalVectorStart;
-    Point2D normalVectorEnd;
 
     public DrawTexts(Graphics2D g) {
         this.g = g;
@@ -25,19 +23,11 @@ public class DrawTexts {
 
         int vx = (int) (arrowEnd.getX() - arrowStart.getX());
         int vy = (int) (arrowEnd.getY() - arrowStart.getY());
-        double vectorLenght = Math.sqrt((vx * vx) + (vy * vy));
 
         normalVector = new Point2D.Double(
                 -vy + arrowStart.getX(),
                 vx + arrowStart.getY()
         );
-
-//        g.drawLine(
-//                (int) (arrowStart.getX()),
-//                (int) (arrowStart.getY()),
-//                (int) (normalVector.getX()),
-//                (int) (normalVector.getY())
-//        )
 
         String temp = String.valueOf(Math.round(pipe.flow * 100.0) / 100.0);
         AttributedString pipeFlow = new AttributedString(temp + " m3/s");

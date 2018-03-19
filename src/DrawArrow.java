@@ -1,4 +1,3 @@
-import javax.sql.rowset.spi.TransactionalWriter;
 import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
@@ -75,14 +74,15 @@ public class DrawArrow
         g.draw(new Line2D.Double(x2, y2, x2 - vArrowX - kx, y2 - vArrowY - ky));
     }
 
+    @Deprecated
     public Point2D getVector() {
         return vector;
     }
-
+    @Deprecated
     public Point2D getArrowStart() {
         return arrowStart;
     }
-
+    @Deprecated
     public Point2D getArrowEnd() {
         return arrowEnd;
     }

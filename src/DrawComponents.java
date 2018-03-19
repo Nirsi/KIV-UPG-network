@@ -29,8 +29,6 @@ public class DrawComponents extends JPanel {
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
             maxX = Math.max(maxX, nn.position.getX());
             maxY = Math.max(maxY, nn.position.getY());
-
-            //System.out.println("Xnode: " + nn.position.getX() + " Ynode: " + nn.position.getY());
         }
 
         if (maxX == 0) {
@@ -40,12 +38,9 @@ public class DrawComponents extends JPanel {
             maxY = getHeight();
         }
 
-        //System.out.println("maxX to setVirtual " + maxX);
         Translator.getInstance().setVirtualWidth(maxX);
-        //System.out.println("maxX to setHeight " + maxY);
         Translator.getInstance().setVirtualHeight(maxY);
 
-        //System.out.println(Translator.getInstance().toString());
 
         for (Pipe p : wn.getAllPipes()) {
             dp.draw(p, reservoirWidth, reservoirHeight);
