@@ -36,17 +36,12 @@ public class DrawReservoir {
         int widthA = width;
         int heightA = height;
 
-        if (reservoir.position.getX() == 0)
-            widthA = 0;
-        if (reservoir.position.getY() == 0)
-            heightA = 0;
-
 //        System.out.println("width / widthA: " + width + "/" + widthA);
 //        System.out.println("X: "+ (reservoir.position.getX() - widthA) + " Y: " + (reservoir.position.getY() - heightA));
 
         g.translate(
-                Translator.getInstance().getRealX(reservoir.position.getX())- widthA,
-                Translator.getInstance().getRealY(reservoir.position.getY())- heightA
+                Translator.getInstance().getRealX(reservoir.position.getX()),
+                Translator.getInstance().getRealY(reservoir.position.getY())
         );
 
         // Draw water

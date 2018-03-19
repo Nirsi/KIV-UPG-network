@@ -1,57 +1,42 @@
 import java.awt.*;
-import java.awt.geom.Point2D;
 
-public class DrawPipes
-{
+public class DrawPipes {
     Graphics2D g;
 
-    private double windowWidth;
-    private double windowHeight;
-
-
-    public DrawPipes(Graphics2D g)
-    {
+    public DrawPipes(Graphics2D g) {
         this.g = g;
     }
 
-    public void draw(Pipe pipe, double windowWidth, double windowHeight)
-    {
-        this.windowWidth = windowWidth;
-        this.windowHeight = windowHeight;
-        drawMetal(pipe);
-        drawWater(pipe);
-        g.setColor(Color.GREEN);
-        //g.fillOval((int)(getTruePosition(pipe.end.position).getX()), (int)(getTruePosition(pipe.end.position).getY()), 20,20);
+    public void draw(Pipe pipe, int width, int height) {
+        //drawMetal(pipe);
+        //drawWater(pipe);
+
+        //Kow
+        drawPipe(pipe, new Color(50, 50, 50), 15, width, height);
+        //Woda
+        drawPipe(pipe, new Color(64, 164, 223), 12, width, height);
+
+
     }
 
-    private Point2D getTruePosition(Point2D position)
-    {
-//        System.out.println("X: " + position.getX() + " Y: " + position.getY());
-//        System.out.println("real X: " + position.getX() * windowWidth / 100 + " real Y: " + position.getY() * windowHeight/ 100 );
-        return new Point2D.Double((position.getX()) / 100.0 * windowWidth, (position.getY()) / 100.0 * windowHeight);
-    }
+//    private Point2D getTruePosition(Point2D position)
+//    {
+////        System.out.println("X: " + position.getX() + " Y: " + position.getY());
+////        System.out.println("real X: " + position.getX() * windowWidth / 100 + " real Y: " + position.getY() * windowHeight/ 100 );
+//        return new Point2D.Double((position.getX()) / 100.0 * windowWidth, (position.getY()) / 100.0 * windowHeight);
+//    }
 
-    private void drawMetal(Pipe pipe)
-    {
-        g.setStroke(new BasicStroke(12));
-        g.setColor(Color.BLACK);
+    private void drawPipe(Pipe pipe, Color color, int strokeSize, int width, int height) {
+        g.setStroke(new BasicStroke(strokeSize));
+        g.setColor(color);
 
+//        - pipe.start.position.getY() * height / 100) + height/2
+//        System.out.println("1: " + Translator.getInstance().getRealX(pipe.start.position.getX()) + " 2: " + Translator.getInstance().getRealX(pipe.start.position.getX()) + " 1-2: " + (int) (Translator.getInstance().getRealX(pipe.start.position.getX()) - Translator.getInstance().getRealX(pipe.start.position.getX())));
         g.drawLine(
-                (int) (getTruePosition(pipe.start.position).getX() - pipe.start.position.getX() * 180 /100) + 180 / 2,
-                (int) (getTruePosition(pipe.start.position).getY() - pipe.start.position.getY() * 180 /100) + 180 / 2,
-                (int) getTruePosition(pipe.end.position).getX(),
-                (int) getTruePosition(pipe.end.position).getY());
-    }
-
-    private void drawWater(Pipe pipe)
-    {
-        g.setStroke(new BasicStroke(6));
-        g.setColor(Color.BLUE);
-
-        g.drawLine(
-                (int) (getTruePosition(pipe.start.position).getX() - pipe.start.position.getX() * 180 /100) + 180 / 2,
-                (int) (getTruePosition(pipe.start.position).getY() - pipe.start.position.getY() * 180 /100) + 180 / 2,
-                (int) getTruePosition(pipe.end.position).getX(),
-                (int) getTruePosition(pipe.end.position).getY());
+                (int) (Translator.getInstance().getRealX(pipe.start.position.getX()) + width / 2),
+                (int) (Translator.getInstance().getRealY(pipe.start.position.getY()) + height / 2),
+                (int) (Translator.getInstance().getRealX(pipe.end.position.getX()) + width / 2),
+                (int) (Translator.getInstance().getRealY(pipe.end.position.getY()) + height / 2)
+        );
     }
 }

@@ -3,6 +3,7 @@ import java.awt.*;
 
 public class DrawComponents extends JPanel {
     private WaterNetwork wn;
+    private int reservoirSize = 150;
 
     public DrawComponents(WaterNetwork wn) {
         this.wn = wn;
@@ -13,8 +14,8 @@ public class DrawComponents extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        Translator.getInstance().setRealWidth(getWidth());
-        Translator.getInstance().setRealHeight(getHeight());
+        Translator.getInstance().setRealWidth(getWidth() - reservoirSize);
+        Translator.getInstance().setRealHeight(getHeight() - reservoirSize);
 
 
         DrawReservoir dr = new DrawReservoir(g2);
@@ -43,20 +44,20 @@ public class DrawComponents extends JPanel {
 
         //System.out.println(Translator.getInstance().toString());
 
-
         for (NetworkNode Nn : wn.getAllNetworkNodes()) {
-            if (Nn instanceof Reservoir)
-                dr.draw((Reservoir) Nn, 150, 150);
-
+            if (Nn instanceof Reservoir) {
+                dr.draw((Reservoir) Nn, reservoirSize, reservoirSize);
+            }
         }
 
         for (Pipe p : wn.getAllPipes()) {
-            dp.draw(p, 150, 150);
+            dp.draw(p, reservoirSize, reservoirSize);
         }
 
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
-            if (!(nn instanceof Reservoir))
-                dn.draw(nn, getWidth(), getHeight());
+            if (!(nn instanceof Reservoir)) {
+                dn.draw(nn, 50, 50);
+            }
         }
 
 
