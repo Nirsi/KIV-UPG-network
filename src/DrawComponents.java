@@ -3,7 +3,8 @@ import java.awt.*;
 
 public class DrawComponents extends JPanel {
     private WaterNetwork wn;
-    private int reservoirSize = 150;
+    private int reservoirWidth = 150;
+    private int reservoirHeight = 150;
 
     public DrawComponents(WaterNetwork wn) {
         this.wn = wn;
@@ -14,13 +15,14 @@ public class DrawComponents extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        Translator.getInstance().setRealWidth(getWidth() - reservoirSize);
-        Translator.getInstance().setRealHeight(getHeight() - reservoirSize);
+        Translator.getInstance().setRealWidth(getWidth() - reservoirWidth);
+        Translator.getInstance().setRealHeight(getHeight() - reservoirWidth);
 
 
         DrawReservoir dr = new DrawReservoir(g2);
         DrawPipes dp = new DrawPipes(g2);
         DrawNodes dn = new DrawNodes(g2);
+        DrawValves dv = new DrawValves(g2);
 
         double maxX = 0, maxY = 0;
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
@@ -46,12 +48,13 @@ public class DrawComponents extends JPanel {
 
         for (NetworkNode Nn : wn.getAllNetworkNodes()) {
             if (Nn instanceof Reservoir) {
-                dr.draw((Reservoir) Nn, reservoirSize, reservoirSize);
+                dr.draw((Reservoir) Nn, reservoirWidth, reservoirHeight);
             }
         }
 
         for (Pipe p : wn.getAllPipes()) {
-            dp.draw(p, reservoirSize, reservoirSize);
+            dp.draw(p, reservoirWidth, reservoirHeight);
+            dv.draw(p, reservoirWidth, reservoirHeight);
         }
 
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
