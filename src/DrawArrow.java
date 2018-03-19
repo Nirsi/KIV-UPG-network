@@ -7,10 +7,14 @@ public class DrawArrow
 {
     Graphics2D g;
     Point2D vector;
+    Point2D arrowStart;
+    Point2D arrowEnd;
+    DrawTexts dt;
 
     public DrawArrow(Graphics2D g)
     {
         this.g = g;
+        dt = new DrawTexts(g);
     }
 
     public void draw(Pipe pipe, int reservoirWidth, int reservoirHeight)
@@ -21,12 +25,12 @@ public class DrawArrow
                 pipe.end.position.getY() - pipe.start.position.getY()
         );
 
-        Point2D arrowStart = new Point2D.Double(
+        arrowStart = new Point2D.Double(
                 pipe.start.position.getX() + vector.getX() * 0.60,
                 pipe.start.position.getY() + vector.getY() * 0.60
                 );
 
-        Point2D arrowEnd = new Point2D.Double(
+        arrowEnd = new Point2D.Double(
                 pipe.start.position.getX() + vector.getX() * 0.75,
                 pipe.start.position.getY() + vector.getY() * 0.75
         );
@@ -39,6 +43,7 @@ public class DrawArrow
                 Translator.getInstance().getRealY(arrowEnd.getY()) + reservoirHeight /2
         );
 
+        dt.draw(pipe,vector,arrowStart,arrowEnd);
         drawArrow((int) arrowStart.getX(),(int) arrowEnd.getX(),(int) arrowStart.getY(),(int) arrowEnd.getY(), 15);
     }
 
@@ -46,7 +51,6 @@ public class DrawArrow
     {
         double vx = x2 - x1;
         double vy = y2 - y1;
-
 
         double vLength = Math.sqrt(vx*vx + vy*vy);
 
@@ -66,5 +70,17 @@ public class DrawArrow
 
         g.draw(new Line2D.Double(x2, y2, x2 - vArrowX + kx, y2 - vArrowY + ky));
         g.draw(new Line2D.Double(x2, y2, x2 - vArrowX - kx, y2 - vArrowY - ky));
+    }
+
+    public Point2D getVector() {
+        return vector;
+    }
+
+    public Point2D getArrowStart() {
+        return arrowStart;
+    }
+
+    public Point2D getArrowEnd() {
+        return arrowEnd;
     }
 }

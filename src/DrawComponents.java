@@ -47,16 +47,16 @@ public class DrawComponents extends JPanel {
 
         //System.out.println(Translator.getInstance().toString());
 
-        for (NetworkNode Nn : wn.getAllNetworkNodes()) {
-            if (Nn instanceof Reservoir) {
-                dr.draw((Reservoir) Nn, reservoirWidth, reservoirHeight);
-            }
-        }
-
         for (Pipe p : wn.getAllPipes()) {
             dp.draw(p, reservoirWidth, reservoirHeight);
             dv.draw(p, reservoirWidth, reservoirHeight);
             da.draw(p, reservoirWidth,reservoirHeight);
+        }
+
+        for (NetworkNode Nn : wn.getAllNetworkNodes()) {
+            if (Nn instanceof Reservoir) {
+                dr.draw((Reservoir) Nn, reservoirWidth, reservoirHeight);
+            }
         }
 
         for (NetworkNode nn : wn.getAllNetworkNodes()) {

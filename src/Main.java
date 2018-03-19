@@ -4,7 +4,7 @@ import java.awt.*;
 public class Main
 {
     public static void main(String[] args) throws InterruptedException {
-        WaterNetwork waterNetwork = new WaterNetwork(3);
+        WaterNetwork waterNetwork = new WaterNetwork();
 
         JFrame frame = new JFrame();
         DrawComponents dc = new DrawComponents(waterNetwork);
@@ -19,5 +19,13 @@ public class Main
         frame.setVisible(true);
 
         //runSimulation(waterNetwork);
+
+        while (true)
+        {
+            waterNetwork.updateState();	//updateState of the system
+            dc.repaint();
+
+            Thread.sleep(20);	//small delay
+        }
     }
 }
