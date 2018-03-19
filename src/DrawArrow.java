@@ -44,7 +44,10 @@ public class DrawArrow
         );
 
         dt.draw(pipe,vector,arrowStart,arrowEnd);
-        drawArrow((int) arrowStart.getX(),(int) arrowEnd.getX(),(int) arrowStart.getY(),(int) arrowEnd.getY(), 15);
+        if (pipe.flow >= 0 )
+            drawArrow((int) arrowStart.getX(),(int) arrowEnd.getX(),(int) arrowStart.getY(),(int) arrowEnd.getY(), 15);
+        else
+            drawArrow((int) arrowEnd.getX(),(int) arrowStart.getX(),(int) arrowEnd.getY(),(int) arrowStart.getY(), 15);
     }
 
     private void drawArrow(int x1, int x2, int y1, int y2, int arrowLength)
