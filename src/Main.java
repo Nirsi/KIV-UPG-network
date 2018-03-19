@@ -4,12 +4,12 @@ import java.awt.*;
 public class Main
 {
     /**
-     * Vstupní bod programu
+     * Entry point of program
      * @param args
      * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
-        WaterNetwork waterNetwork = new WaterNetwork();
+        WaterNetwork waterNetwork = new WaterNetwork(3);
 
         JFrame frame = new JFrame();
         DrawComponents dc = new DrawComponents(waterNetwork);

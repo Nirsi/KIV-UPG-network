@@ -6,6 +6,10 @@ public class DrawComponents extends JPanel {
     private int reservoirWidth = 150;
     private int reservoirHeight = 150;
 
+    /**
+     * Constructor for passing watter network
+     * @param wn
+     */
     public DrawComponents(WaterNetwork wn) {
         this.wn = wn;
     }
