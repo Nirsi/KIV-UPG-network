@@ -1,54 +1,69 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
-import static java.awt.Color.BLACK;
-import static java.awt.Color.BLUE;
-
-public class DrawReservoir
-{
+public class DrawReservoir {
     private Graphics2D g;
-
-    private int height = 180;
-    private int width = 180;
-
-
 
     private int glyphSize = 200;
 
-
-
-    public DrawReservoir(Graphics2D g)
-    {
+    public DrawReservoir(Graphics2D g) {
         this.g = g;
-
     }
 
-    public void draw(Reservoir reservoir, int wWidth, int wHeight)
-    {
-        wWidth -= width;
-        wHeight -= height;
+//    public void draw(Reservoir reservoir, int wWidth, int wHeight)
+//    {
+//        wWidth -= width;
+//        wHeight -= height;
+//
+//        AffineTransform baseTransform = g.getTransform();
+//
+//        g.translate(reservoir.position.getX() / 100 * wWidth, reservoir.position.getY() / 100 * wHeight);
+//
+//        //Woda
+//        g.rotate(Math.toRadians(180), width / 2, height / 2);
+//        g.setColor(BLUE);
+//        g.fillRect(0,0,width,(int)(reservoir.content / reservoir.capacity * height));
+//
+//        //Obal
+//        g.setColor(BLACK);
+//        g.drawRect(0,0,width,height);
+//
+//        g.setTransform(baseTransform);
+//    }
 
-        AffineTransform baseTransform = g.getTransform();
+    public void draw(Reservoir reservoir, int width, int height) {
+        AffineTransform at = g.getTransform();
+        int widthA = width;
+        int heightA = height;
 
-        g.translate(reservoir.position.getX() / 100 * wWidth, reservoir.position.getY() / 100 * wHeight);
+        if (reservoir.position.getX() == 0)
+            widthA = 0;
+        if (reservoir.position.getY() == 0)
+            heightA = 0;
 
-        //Woda
+//        System.out.println("width / widthA: " + width + "/" + widthA);
+//        System.out.println("X: "+ (reservoir.position.getX() - widthA) + " Y: " + (reservoir.position.getY() - heightA));
+
+        g.translate(
+                Translator.getInstance().getRealX(reservoir.position.getX())- widthA,
+                Translator.getInstance().getRealY(reservoir.position.getY())- heightA
+        );
+
+        // Draw water
         g.rotate(Math.toRadians(180), width / 2, height / 2);
-        g.setColor(BLUE);
-        g.fillRect(0,0,width,(int)(reservoir.content / reservoir.capacity * height));
 
-        //Obal
-        g.setColor(BLACK);
-        g.drawRect(0,0,width,height);
+        // Set reservoir background
+        g.setColor(Color.GRAY);
+        g.fillRect(0, 0, width, height);
 
-        g.setTransform(baseTransform);
+        g.setColor(new Color(64, 164, 223)); // Blue
+        g.fillRect(0, 0, width, (int) (reservoir.content / reservoir.capacity * height));
 
-        //Pipes
+        // Draw border
+        g.setColor(Color.BLACK);
+        g.setStroke(new BasicStroke(2));
+        g.drawRect(0, 0, width, height);
 
-
-
-
-
-
+        g.setTransform(at);
     }
 }

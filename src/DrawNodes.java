@@ -22,7 +22,7 @@ public class DrawNodes
         System.out.println(getTruePosition(node.position).getX());
         Ellipse2D nodeCircle = new Ellipse2D.Double(getTruePosition(node.position).getX(), getTruePosition(node.position).getY(),50,50);
         g.translate(-nodeCircle.getWidth()/2, -nodeCircle.getHeight()/2);
-        g.draw(nodeCircle);
+        g.fill(nodeCircle);
     }
 
     private Point2D getTruePosition(Point2D position)
