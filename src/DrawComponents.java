@@ -10,6 +10,10 @@ public class DrawComponents extends JPanel {
         this.wn = wn;
     }
 
+    /**
+     * Overrided paintComponent
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);

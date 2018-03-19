@@ -6,12 +6,21 @@ public class DrawReservoir {
 
     private int glyphSize = 200;
 
+    /**
+     * Constructor for passing of Graphics instance.
+     * @param g
+     */
     public DrawReservoir(Graphics2D g) {
         this.g = g;
     }
 
-//
 
+    /**
+     * Drawing method
+     * @param reservoir
+     * @param width
+     * @param height
+     */
     public void draw(Reservoir reservoir, int width, int height) {
         AffineTransform at = g.getTransform();
 

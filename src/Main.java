@@ -3,6 +3,11 @@ import java.awt.*;
 
 public class Main
 {
+    /**
+     * Vstupní bod programu
+     * @param args
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws InterruptedException {
         WaterNetwork waterNetwork = new WaterNetwork();
 

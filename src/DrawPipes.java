@@ -3,6 +3,10 @@ import java.awt.*;
 public class DrawPipes {
     Graphics2D g;
 
+    /**
+     * Constructor for passing Graphics instance.
+     * @param g
+     */
     public DrawPipes(Graphics2D g) {
         this.g = g;
     }
@@ -17,6 +21,14 @@ public class DrawPipes {
 
     }
 
+    /**
+     * Drawing of Pipes
+     * @param pipe
+     * @param color
+     * @param strokeSize
+     * @param width
+     * @param height
+     */
     private void drawPipe(Pipe pipe, Color color, int strokeSize, int width, int height) {
         g.setStroke(new BasicStroke(strokeSize));
         g.setColor(color);

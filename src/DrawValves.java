@@ -8,10 +8,20 @@ public class DrawValves {
     private int valveWidth = 50;
     private int valveHeight = 50;
 
+    /**
+     * Constructor for passing Graphics instance
+     * @param g
+     */
     public DrawValves(Graphics2D g) {
         this.g = g;
     }
 
+    /**
+     * Drawing method
+     * @param pipe
+     * @param reservoirWidth
+     * @param reservoirHeight
+     */
     public void draw(Pipe pipe, int reservoirWidth, int reservoirHeight) {
         computeVector(pipe);
 
@@ -40,6 +50,11 @@ public class DrawValves {
         g.setColor(Color.BLACK);
         g.setClip(c);
     }
+
+    /**
+     * Computing vector
+     * @param pipe
+     */
     private void computeVector(Pipe pipe) {
         vector = new Point2D.Double(
                 pipe.end.position.getX() - pipe.start.position.getX(),
