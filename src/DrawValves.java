@@ -13,10 +13,9 @@ public class DrawValves {
     }
 
     public void draw(Pipe pipe, int reservoirWidth, int reservoirHeight) {
-        vector = new Point2D.Double((pipe.end.position.getX() - pipe.start.position.getX()), pipe.end.position.getY() - pipe.start.position.getY());
-        vector = new Point2D.Double(vector.getX() * 0.4, vector.getY() * 0.4);
+        computeVector(pipe);
 
-        g.setColor(new Color(255,215,0));
+        g.setColor(new Color(255, 215, 0));
         g.fillOval(
                 (int) (Translator.getInstance().getRealX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
                 (int) (Translator.getInstance().getRealY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
@@ -31,7 +30,7 @@ public class DrawValves {
                 valveWidth,
                 valveHeight);
 
-        g.setColor(Color.PINK);
+        g.setColor(Color.BLACK);
         g.fillOval(
                 (int) (Translator.getInstance().getRealX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
                 (int) (Translator.getInstance().getRealY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
@@ -41,5 +40,16 @@ public class DrawValves {
         g.setColor(Color.BLACK);
 
         g.setClip(c);
+
+
     }
+
+    private void computeVector(Pipe pipe) {
+        vector = new Point2D.Double(
+                pipe.end.position.getX() - pipe.start.position.getX(),
+                pipe.end.position.getY() - pipe.start.position.getY()
+        );
+        vector = new Point2D.Double(vector.getX() * 0.4, vector.getY() * 0.4);
+    }
+
 }

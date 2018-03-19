@@ -4,7 +4,7 @@ import java.awt.*;
 public class Main
 {
     public static void main(String[] args) throws InterruptedException {
-        WaterNetwork waterNetwork = new WaterNetwork(4);
+        WaterNetwork waterNetwork = new WaterNetwork(3);
 
         JFrame frame = new JFrame();
         DrawComponents dc = new DrawComponents(waterNetwork);
