@@ -1,0 +1,1 @@
+java -cp .\bin;.\src\water-network\Jama-1.0.3.jar Main %*

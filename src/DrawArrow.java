@@ -16,6 +16,12 @@ public class DrawArrow
         dt = new DrawTexts(g);
     }
 
+    /**
+     * Drawing of Pipes -> computing vectors for drawing
+     * @param pipe
+     * @param reservoirWidth
+     * @param reservoirHeight
+     */
     public void draw(Pipe pipe, int reservoirWidth, int reservoirHeight)
     {
         g.setStroke(new BasicStroke(2));
@@ -34,12 +40,12 @@ public class DrawArrow
                 pipe.start.position.getY() + vector.getY() * 0.75
         );
         arrowStart = new Point2D.Double(
-                Translator.getInstance().getRealX(arrowStart.getX()) + reservoirWidth/2,
-                Translator.getInstance().getRealY(arrowStart.getY()) + reservoirHeight /2
+                Translator.getInstance().getTranslatedX(arrowStart.getX()) + reservoirWidth/2,
+                Translator.getInstance().getTranslatedY(arrowStart.getY()) + reservoirHeight /2
         );
         arrowEnd = new Point2D.Double(
-                Translator.getInstance().getRealX(arrowEnd.getX()) + reservoirWidth/2,
-                Translator.getInstance().getRealY(arrowEnd.getY()) + reservoirHeight /2
+                Translator.getInstance().getTranslatedX(arrowEnd.getX()) + reservoirWidth/2,
+                Translator.getInstance().getTranslatedY(arrowEnd.getY()) + reservoirHeight /2
         );
 
         dt.draw(pipe,vector,arrowStart,arrowEnd);
@@ -49,6 +55,14 @@ public class DrawArrow
             drawArrow((int) arrowEnd.getX(),(int) arrowStart.getX(),(int) arrowEnd.getY(),(int) arrowStart.getY(), 15);
     }
 
+    /**
+     * Drawing respective arrows from precomputed coordinates.
+     * @param x1
+     * @param x2
+     * @param y1
+     * @param y2
+     * @param arrowLength
+     */
     private void drawArrow(int x1, int x2, int y1, int y2, int arrowLength)
     {
         double vx = x2 - x1;

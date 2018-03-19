@@ -12,10 +12,21 @@ public class DrawTexts {
     Point2D arrowEnd;
     Point2D normalVector;
 
+    /**
+     * Constractor for passing Graphics instance.
+     * @param g
+     */
     public DrawTexts(Graphics2D g) {
         this.g = g;
     }
 
+    /**
+     * Drawing method
+     * @param pipe
+     * @param vector
+     * @param arrowStart
+     * @param arrowEnd
+     */
     public void draw(Pipe pipe, Point2D vector, Point2D arrowStart, Point2D arrowEnd) {
         this.vector = vector;
         this.arrowStart = arrowStart;

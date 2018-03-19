@@ -1,17 +1,18 @@
-import java.awt.*;
-import java.awt.geom.Point2D;
-
 public class Translator
 {
     private static Translator Instance;
 
-    private double realWidth;
-    private double realHeight;
+    private double translatedWidth;
+    private double translatedHeight;
 
     private double virtualWidth;
     private double virtualHeight;
 
 
+    /**
+     * Returns instance of singleton
+     * @return new Translator
+     */
     public static Translator getInstance()
     {
         if (Instance == null)
@@ -19,41 +20,60 @@ public class Translator
         return Instance;
     }
 
-    public double getRealX(double x)
+    /**
+     * Returns real X for drawing
+     * @param x
+     * @return double
+     */
+    public double getTranslatedX(double x)
     {
-        return realWidth / virtualWidth * x;
+        return translatedWidth / virtualWidth * x;
     }
 
-    public double getRealY(double y)
+    /**
+     * Returns real Y for drawing
+     * @param y
+     * @return
+     */
+    public double getTranslatedY(double y)
     {
-        return realHeight / virtualHeight * y;
+        return translatedHeight / virtualHeight * y;
     }
 
-    @Deprecated
-    public Point2D getRealCoords(Point2D virtualPosition)
-    {
-        return new Point2D.Double(realWidth / virtualWidth * virtualPosition.getX(), realWidth / virtualWidth * virtualPosition.getY());
+    /**
+     * Sets width of real window
+     * @param translatedWidth
+     */
+    public void setTranslatedWidth(double translatedWidth) {
+        this.translatedWidth = translatedWidth;
     }
 
-
-    public void setRealWidth(double realWidth) {
-        this.realWidth = realWidth;
+    /**
+     * Sets height of real window
+     * @param translatedHeight
+     */
+    public void setTranslatedHeight(double translatedHeight) {
+        this.translatedHeight = translatedHeight;
     }
 
-    public void setRealHeight(double realHeight) {
-        this.realHeight = realHeight;
-    }
-
+    /**
+     * Sets width of virtual window
+     * @param virtualWidth
+     */
     public void setVirtualWidth(double virtualWidth) {
         this.virtualWidth = virtualWidth;
     }
 
+    /**
+     * Sets ¨height of virtual window
+     * @param virtualHeight
+     */
     public void setVirtualHeight(double virtualHeight) {
         this.virtualHeight = virtualHeight;
     }
 
     @Override
     public String toString() {
-        return "realWidth: " + realWidth + " realHeight: " + realHeight + " virtualWidth: " + virtualWidth + "virtualHeight: " + virtualHeight;
+        return "translatedWidth: " + translatedWidth + " translatedHeight: " + translatedHeight + " virtualWidth: " + virtualWidth + "virtualHeight: " + virtualHeight;
     }
 }

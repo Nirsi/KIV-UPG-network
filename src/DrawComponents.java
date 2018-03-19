@@ -6,17 +6,25 @@ public class DrawComponents extends JPanel {
     private int reservoirWidth = 150;
     private int reservoirHeight = 150;
 
+    /**
+     * Constructor for passing watter network
+     * @param wn
+     */
     public DrawComponents(WaterNetwork wn) {
         this.wn = wn;
     }
 
+    /**
+     * Overrided paintComponent
+     * @param g
+     */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        Translator.getInstance().setRealWidth(getWidth() - reservoirWidth);
-        Translator.getInstance().setRealHeight(getHeight() - reservoirWidth);
+        Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
+        Translator.getInstance().setTranslatedHeight(getHeight() - reservoirWidth);
 
 
         DrawReservoir dr = new DrawReservoir(g2);
