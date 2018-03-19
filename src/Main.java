@@ -17,17 +17,16 @@ public class Main
 
         frame.add(dc);
 
-        frame.setTitle("UPG - Semestrální vykreslení");
+        frame.setTitle("UPG - water network visualisation");
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
 
-        while (true)
+        for(;;)
         {
             waterNetwork.updateState();
             dc.repaint();
-
             Thread.sleep(20);
         }
     }

@@ -23,8 +23,8 @@ public class DrawComponents extends JPanel {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
 
-        Translator.getInstance().setRealWidth(getWidth() - reservoirWidth);
-        Translator.getInstance().setRealHeight(getHeight() - reservoirWidth);
+        Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
+        Translator.getInstance().setTranslatedHeight(getHeight() - reservoirWidth);
 
 
         DrawReservoir dr = new DrawReservoir(g2);

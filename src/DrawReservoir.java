@@ -4,10 +4,9 @@ import java.awt.geom.AffineTransform;
 public class DrawReservoir {
     private Graphics2D g;
 
-    private int glyphSize = 200;
-
     /**
      * Constructor for passing of Graphics instance.
+     *
      * @param g
      */
     public DrawReservoir(Graphics2D g) {
@@ -17,33 +16,32 @@ public class DrawReservoir {
 
     /**
      * Drawing method
+     *
      * @param reservoir
      * @param width
      * @param height
      */
     public void draw(Reservoir reservoir, int width, int height) {
-        AffineTransform at = g.getTransform();
+
+        AffineTransform baseTransform = g.getTransform();
 
         g.translate(
-                Translator.getInstance().getRealX(reservoir.position.getX()),
-                Translator.getInstance().getRealY(reservoir.position.getY())
+                Translator.getInstance().getTranslatedX(reservoir.position.getX()),
+                Translator.getInstance().getTranslatedY(reservoir.position.getY())
         );
 
-        // Draw water
+        //Water
         g.rotate(Math.toRadians(180), width / 2, height / 2);
-
-        // Set reservoir background
         g.setColor(Color.GRAY);
         g.fillRect(0, 0, width, height);
-
-        g.setColor(new Color(64, 164, 223)); // Blue
+        g.setColor(Color.BLUE);
         g.fillRect(0, 0, width, (int) (reservoir.content / reservoir.capacity * height));
 
-        // Draw border
+        // Case of Reservoir
         g.setColor(Color.BLACK);
-        g.setStroke(new BasicStroke(2));
+        g.setStroke(new BasicStroke(3));
         g.drawRect(0, 0, width, height);
 
-        g.setTransform(at);
+        g.setTransform(baseTransform);
     }
 }

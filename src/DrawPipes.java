@@ -34,10 +34,10 @@ public class DrawPipes {
         g.setColor(color);
 
         g.drawLine(
-                (int) (Translator.getInstance().getRealX(pipe.start.position.getX()) + width / 2),
-                (int) (Translator.getInstance().getRealY(pipe.start.position.getY()) + height / 2),
-                (int) (Translator.getInstance().getRealX(pipe.end.position.getX()) + width / 2),
-                (int) (Translator.getInstance().getRealY(pipe.end.position.getY()) + height / 2)
+                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX()) + width / 2),
+                (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY()) + height / 2),
+                (int) (Translator.getInstance().getTranslatedX(pipe.end.position.getX()) + width / 2),
+                (int) (Translator.getInstance().getTranslatedY(pipe.end.position.getY()) + height / 2)
         );
     }
 }

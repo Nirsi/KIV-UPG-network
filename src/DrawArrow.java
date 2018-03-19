@@ -40,12 +40,12 @@ public class DrawArrow
                 pipe.start.position.getY() + vector.getY() * 0.75
         );
         arrowStart = new Point2D.Double(
-                Translator.getInstance().getRealX(arrowStart.getX()) + reservoirWidth/2,
-                Translator.getInstance().getRealY(arrowStart.getY()) + reservoirHeight /2
+                Translator.getInstance().getTranslatedX(arrowStart.getX()) + reservoirWidth/2,
+                Translator.getInstance().getTranslatedY(arrowStart.getY()) + reservoirHeight /2
         );
         arrowEnd = new Point2D.Double(
-                Translator.getInstance().getRealX(arrowEnd.getX()) + reservoirWidth/2,
-                Translator.getInstance().getRealY(arrowEnd.getY()) + reservoirHeight /2
+                Translator.getInstance().getTranslatedX(arrowEnd.getX()) + reservoirWidth/2,
+                Translator.getInstance().getTranslatedY(arrowEnd.getY()) + reservoirHeight /2
         );
 
         dt.draw(pipe,vector,arrowStart,arrowEnd);

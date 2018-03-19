@@ -37,8 +37,8 @@ public class DrawNodes
         g.setColor(color);
 
         g.fillOval(
-                (int) Translator.getInstance().getRealX(node.position.getX()) + width,
-                (int) Translator.getInstance().getRealY(node.position.getY()) + width,
+                (int) Translator.getInstance().getTranslatedX(node.position.getX()) + width,
+                (int) Translator.getInstance().getTranslatedY(node.position.getY()) + width,
                 width,
                 height
         );

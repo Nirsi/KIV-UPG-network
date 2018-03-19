@@ -27,23 +27,23 @@ public class DrawValves {
 
         g.setColor(new Color(255, 215, 0));
         g.fillOval(
-                (int) (Translator.getInstance().getRealX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
-                (int) (Translator.getInstance().getRealY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
+                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
+                (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
                 valveWidth,
                 valveHeight);
 
         Shape c = g.getClip();
 
         g.setClip(
-                (int) (Translator.getInstance().getRealX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
-                (int) ((Translator.getInstance().getRealY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2) + (valveWidth * pipe.open)),
+                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
+                (int) ((Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2) + (valveWidth * pipe.open)),
                 valveWidth,
                 valveHeight);
 
         g.setColor(Color.BLACK);
         g.fillOval(
-                (int) (Translator.getInstance().getRealX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
-                (int) (Translator.getInstance().getRealY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
+                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
+                (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
                 valveWidth,
                 valveHeight);
 

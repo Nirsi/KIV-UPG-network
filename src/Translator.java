@@ -1,12 +1,9 @@
-import java.awt.*;
-import java.awt.geom.Point2D;
-
 public class Translator
 {
     private static Translator Instance;
 
-    private double realWidth;
-    private double realHeight;
+    private double translatedWidth;
+    private double translatedHeight;
 
     private double virtualWidth;
     private double virtualHeight;
@@ -28,9 +25,9 @@ public class Translator
      * @param x
      * @return double
      */
-    public double getRealX(double x)
+    public double getTranslatedX(double x)
     {
-        return realWidth / virtualWidth * x;
+        return translatedWidth / virtualWidth * x;
     }
 
     /**
@@ -38,36 +35,25 @@ public class Translator
      * @param y
      * @return
      */
-    public double getRealY(double y)
+    public double getTranslatedY(double y)
     {
-        return realHeight / virtualHeight * y;
-    }
-
-    /**
-     * Returns Point2D of real X and Y for drawing
-     * @param virtualPosition
-     * @return
-     */
-    @Deprecated
-    public Point2D getRealCoords(Point2D virtualPosition)
-    {
-        return new Point2D.Double(realWidth / virtualWidth * virtualPosition.getX(), realWidth / virtualWidth * virtualPosition.getY());
+        return translatedHeight / virtualHeight * y;
     }
 
     /**
      * Sets width of real window
-     * @param realWidth
+     * @param translatedWidth
      */
-    public void setRealWidth(double realWidth) {
-        this.realWidth = realWidth;
+    public void setTranslatedWidth(double translatedWidth) {
+        this.translatedWidth = translatedWidth;
     }
 
     /**
      * Sets height of real window
-     * @param realHeight
+     * @param translatedHeight
      */
-    public void setRealHeight(double realHeight) {
-        this.realHeight = realHeight;
+    public void setTranslatedHeight(double translatedHeight) {
+        this.translatedHeight = translatedHeight;
     }
 
     /**
@@ -88,6 +74,6 @@ public class Translator
 
     @Override
     public String toString() {
-        return "realWidth: " + realWidth + " realHeight: " + realHeight + " virtualWidth: " + virtualWidth + "virtualHeight: " + virtualHeight;
+        return "translatedWidth: " + translatedWidth + " translatedHeight: " + translatedHeight + " virtualWidth: " + virtualWidth + "virtualHeight: " + virtualHeight;
     }
 }
