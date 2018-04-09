@@ -32,8 +32,6 @@ public class DrawReservoir {
 
         //Water
         g.rotate(Math.toRadians(180), width / 2, height / 2);
-        g.setColor(Color.GRAY);
-        g.fillRect(0, 0, width, height);
         g.setColor(Color.BLUE);
         g.fillRect(0, 0, width, (int) (reservoir.content / reservoir.capacity * height));
 

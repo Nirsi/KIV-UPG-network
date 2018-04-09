@@ -16,7 +16,7 @@ public class DrawPipes {
         //Kow
         drawPipe(pipe, new Color(50, 50, 50), 15, width, height);
         //Woda
-        drawPipe(pipe, new Color(64, 164, 223), 12, width, height);
+        drawPipe(pipe, Color.BLUE, 12, width, height);
 
 
     }
