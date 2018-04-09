@@ -32,6 +32,7 @@ public class MainPanel extends JPanel {
         DrawNodes dn = new DrawNodes(g2);
         DrawValves dv = new DrawValves(g2);
         DrawArrow da = new DrawArrow(g2);
+        DrawNetworkComponents dnc = new DrawNetworkComponents(g2);
 
         double maxX = 0, maxY = 0;
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
@@ -51,6 +52,8 @@ public class MainPanel extends JPanel {
 
 
         for (Pipe p : wn.getAllPipes()) {
+            dnc.drawPipes(p,reservoirWidth,reservoirHeight);
+            //dp.draw(p, reservoirWidth, reservoirHeight);
             dp.draw(p, reservoirWidth, reservoirHeight);
             dv.draw(p, reservoirWidth, reservoirHeight);
             da.draw(p, reservoirWidth,reservoirHeight);
@@ -58,7 +61,9 @@ public class MainPanel extends JPanel {
 
         for (NetworkNode Nn : wn.getAllNetworkNodes()) {
             if (Nn instanceof Reservoir) {
-                dr.draw((Reservoir) Nn, reservoirWidth, reservoirHeight);
+                //dr.draw((Reservoir) Nn, reservoirWidth, reservoirHeight);
+                dnc.drawReservoirs((Reservoir) Nn, reservoirWidth, reservoirHeight);
+
             }
         }
 
