@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class DrawComponents extends JPanel {
+public class MainPanel extends JPanel {
     private WaterNetwork wn;
     private int reservoirWidth = 150;
     private int reservoirHeight = 150;
@@ -10,7 +10,7 @@ public class DrawComponents extends JPanel {
      * Constructor for passing watter network
      * @param wn
      */
-    public DrawComponents(WaterNetwork wn) {
+    public MainPanel(WaterNetwork wn) {
         this.wn = wn;
     }
 
