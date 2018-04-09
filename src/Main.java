@@ -9,7 +9,7 @@ public class Main
      * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
-        WaterNetwork waterNetwork = new WaterNetwork(3);
+        WaterNetwork waterNetwork = new WaterNetwork(0);
 
         JFrame frame = new JFrame();
         MainPanel dc = new MainPanel(waterNetwork);

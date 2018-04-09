@@ -55,7 +55,8 @@ public class MainPanel extends JPanel {
             dnc.drawPipes(p,reservoirWidth,reservoirHeight);
             //dp.draw(p, reservoirWidth, reservoirHeight);
             dnc.drawValves(p, reservoirWidth, reservoirHeight);
-            da.draw(p, reservoirWidth,reservoirHeight);
+            //da.draw(p, reservoirWidth,reservoirHeight);
+            dnc.drawArrows(p, reservoirWidth, reservoirHeight);
         }
 
         for (NetworkNode Nn : wn.getAllNetworkNodes()) {

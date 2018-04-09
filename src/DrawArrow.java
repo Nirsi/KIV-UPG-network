@@ -22,6 +22,7 @@ public class DrawArrow {
      * @param reservoirHeight
      */
     public void draw(Pipe pipe, int reservoirWidth, int reservoirHeight) {
+
         g.setStroke(new BasicStroke(2));
         vector = new Point2D.Double(
                 (pipe.end.position.getX() - pipe.start.position.getX()),
