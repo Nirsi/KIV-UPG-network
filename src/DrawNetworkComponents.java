@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
 
 public class DrawNetworkComponents {
 
@@ -71,5 +72,72 @@ public class DrawNetworkComponents {
                 (int) (Translator.getInstance().getTranslatedX(pipe.end.position.getX()) + width / 2),
                 (int) (Translator.getInstance().getTranslatedY(pipe.end.position.getY()) + height / 2)
         );
+    }
+
+    /**
+     *
+     * @param node
+     * @param width
+     * @param height
+     */
+    public void drawNodes(NetworkNode node, int width, int height)
+    {
+        g.setColor(new Color(50, 50, 50));
+        g.fillOval(
+                (int) Translator.getInstance().getTranslatedX(node.position.getX()) + width,
+                (int) Translator.getInstance().getTranslatedY(node.position.getY()) + width,
+                width,
+                height
+        );
+    }
+
+    /**
+     * Drawing method
+     * @param pipe
+     * @param reservoirWidth
+     * @param reservoirHeight
+     */
+    public void drawValves(Pipe pipe, int reservoirWidth, int reservoirHeight) {
+        Point2D vector = computeVector(pipe);
+
+        int valveWidth = 50;
+        int valveHeight = 50;
+
+        g.setColor(new Color(255, 215, 0));
+        g.fillOval(
+                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
+                (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
+                valveWidth,
+                valveHeight);
+
+        Shape c = g.getClip();
+
+        g.setClip(
+                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
+                (int) ((Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2) + (valveWidth * pipe.open)),
+                valveWidth,
+                valveHeight);
+
+        g.setColor(Color.BLACK);
+        g.fillOval(
+                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
+                (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
+                valveWidth,
+                valveHeight);
+
+        g.setColor(Color.BLACK);
+        g.setClip(c);
+    }
+
+    /**
+     * Computing vector
+     * @param pipe
+     */
+    private Point2D computeVector(Pipe pipe) {
+        Point2D vector = new Point2D.Double(
+                pipe.end.position.getX() - pipe.start.position.getX(),
+                pipe.end.position.getY() - pipe.start.position.getY()
+        );
+        return new Point2D.Double(vector.getX() * 0.4, vector.getY() * 0.4);
     }
 }

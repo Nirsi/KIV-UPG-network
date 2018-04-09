@@ -15,7 +15,7 @@ public class MainPanel extends JPanel {
     }
 
     /**
-     * Overrided paintComponent
+     * Override paintComponent
      * @param g
      */
     @Override
@@ -54,8 +54,7 @@ public class MainPanel extends JPanel {
         for (Pipe p : wn.getAllPipes()) {
             dnc.drawPipes(p,reservoirWidth,reservoirHeight);
             //dp.draw(p, reservoirWidth, reservoirHeight);
-            dp.draw(p, reservoirWidth, reservoirHeight);
-            dv.draw(p, reservoirWidth, reservoirHeight);
+            dnc.drawValves(p, reservoirWidth, reservoirHeight);
             da.draw(p, reservoirWidth,reservoirHeight);
         }
 
@@ -69,7 +68,8 @@ public class MainPanel extends JPanel {
 
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
             if (!(nn instanceof Reservoir)) {
-                dn.draw(nn, 50, 50);
+                //dn.draw(nn, 50, 50);
+                dnc.drawNodes(nn,50,50);
             }
         }
 

@@ -2,28 +2,26 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
-public class DrawArrow
-{
+public class DrawArrow {
     Graphics2D g;
     Point2D vector;
     Point2D arrowStart;
     Point2D arrowEnd;
     DrawTexts dt;
 
-    public DrawArrow(Graphics2D g)
-    {
+    public DrawArrow(Graphics2D g) {
         this.g = g;
         dt = new DrawTexts(g);
     }
 
     /**
      * Drawing of Pipes -> computing vectors for drawing
+     *
      * @param pipe
      * @param reservoirWidth
      * @param reservoirHeight
      */
-    public void draw(Pipe pipe, int reservoirWidth, int reservoirHeight)
-    {
+    public void draw(Pipe pipe, int reservoirWidth, int reservoirHeight) {
         g.setStroke(new BasicStroke(2));
         vector = new Point2D.Double(
                 (pipe.end.position.getX() - pipe.start.position.getX()),
@@ -33,42 +31,43 @@ public class DrawArrow
         arrowStart = new Point2D.Double(
                 pipe.start.position.getX() + vector.getX() * 0.60,
                 pipe.start.position.getY() + vector.getY() * 0.60
-                );
+        );
 
         arrowEnd = new Point2D.Double(
                 pipe.start.position.getX() + vector.getX() * 0.75,
                 pipe.start.position.getY() + vector.getY() * 0.75
         );
         arrowStart = new Point2D.Double(
-                Translator.getInstance().getTranslatedX(arrowStart.getX()) + reservoirWidth/2,
-                Translator.getInstance().getTranslatedY(arrowStart.getY()) + reservoirHeight /2
+                Translator.getInstance().getTranslatedX(arrowStart.getX()) + reservoirWidth / 2,
+                Translator.getInstance().getTranslatedY(arrowStart.getY()) + reservoirHeight / 2
         );
         arrowEnd = new Point2D.Double(
-                Translator.getInstance().getTranslatedX(arrowEnd.getX()) + reservoirWidth/2,
-                Translator.getInstance().getTranslatedY(arrowEnd.getY()) + reservoirHeight /2
+                Translator.getInstance().getTranslatedX(arrowEnd.getX()) + reservoirWidth / 2,
+                Translator.getInstance().getTranslatedY(arrowEnd.getY()) + reservoirHeight / 2
         );
 
-        dt.draw(pipe,vector,arrowStart,arrowEnd);
-        if (pipe.flow >= 0 )
-            drawArrow((int) arrowStart.getX(),(int) arrowEnd.getX(),(int) arrowStart.getY(),(int) arrowEnd.getY(), 15);
-        else
-            drawArrow((int) arrowEnd.getX(),(int) arrowStart.getX(),(int) arrowEnd.getY(),(int) arrowStart.getY(), 15);
+        dt.draw(pipe, vector, arrowStart, arrowEnd);
+        if (pipe.flow >= 0) {
+            drawArrow((int) arrowStart.getX(), (int) arrowEnd.getX(), (int) arrowStart.getY(), (int) arrowEnd.getY(), 15);
+        } else {
+            drawArrow((int) arrowEnd.getX(), (int) arrowStart.getX(), (int) arrowEnd.getY(), (int) arrowStart.getY(), 15);
+        }
     }
 
     /**
      * Drawing respective arrows from precomputed coordinates.
+     *
      * @param x1
      * @param x2
      * @param y1
      * @param y2
      * @param arrowLength
      */
-    private void drawArrow(int x1, int x2, int y1, int y2, int arrowLength)
-    {
+    private void drawArrow(int x1, int x2, int y1, int y2, int arrowLength) {
         double vx = x2 - x1;
         double vy = y2 - y1;
 
-        double vLength = Math.sqrt(vx*vx + vy*vy);
+        double vLength = Math.sqrt(vx * vx + vy * vy);
 
         double vNormX = vx / vLength;
         double vNormY = vy / vLength;
@@ -92,10 +91,12 @@ public class DrawArrow
     public Point2D getVector() {
         return vector;
     }
+
     @Deprecated
     public Point2D getArrowStart() {
         return arrowStart;
     }
+
     @Deprecated
     public Point2D getArrowEnd() {
         return arrowEnd;
