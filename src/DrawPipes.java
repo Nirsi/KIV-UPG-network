@@ -1,5 +1,6 @@
 import java.awt.*;
 
+@Deprecated
 public class DrawPipes {
     Graphics2D g;
 

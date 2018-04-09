@@ -3,6 +3,7 @@ import java.awt.font.TextAttribute;
 import java.awt.geom.Point2D;
 import java.text.AttributedString;
 
+@Deprecated
 public class DrawTexts {
 
     Graphics2D g;

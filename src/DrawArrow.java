@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 
+@Deprecated
 public class DrawArrow {
     Graphics2D g;
     Point2D vector;
@@ -65,6 +66,7 @@ public class DrawArrow {
      * @param arrowLength
      */
     private void drawArrow(int x1, int x2, int y1, int y2, int arrowLength) {
+        int diff = 0;
         double vx = x2 - x1;
         double vy = y2 - y1;
 
@@ -88,17 +90,14 @@ public class DrawArrow {
         g.draw(new Line2D.Double(x2, y2, x2 - vArrowX - kx, y2 - vArrowY - ky));
     }
 
-    @Deprecated
     public Point2D getVector() {
         return vector;
     }
 
-    @Deprecated
     public Point2D getArrowStart() {
         return arrowStart;
     }
 
-    @Deprecated
     public Point2D getArrowEnd() {
         return arrowEnd;
     }

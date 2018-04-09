@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 
+@Deprecated
 public class DrawReservoir {
     private Graphics2D g;
 
@@ -37,7 +38,7 @@ public class DrawReservoir {
 
         // Case of Reservoir
         g.setColor(Color.BLACK);
-        g.setStroke(new BasicStroke(3));
+        g.setStroke(new BasicStroke(2));
         g.drawRect(0, 0, width, height);
 
         g.setTransform(baseTransform);
