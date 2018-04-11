@@ -238,7 +238,7 @@ public class DrawNetworkComponents {
                 vx + arrowStart.getY()
         );
 
-        String temp = String.valueOf(Math.round(pipe.flow * 100.0) / 100.0);
+        String temp = String.valueOf(Math.abs(Math.round(pipe.flow * 100.0) / 100.0));
         AttributedString pipeFlow = new AttributedString(temp + " m3/s");
         pipeFlow.addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUPER, temp.length() + 2, temp.length() + 3);
 
