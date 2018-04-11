@@ -1,7 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
 
-public class DrawComponents extends JPanel {
+public class MainPanel extends JPanel {
     private WaterNetwork wn;
     private int reservoirWidth = 150;
     private int reservoirHeight = 150;
@@ -10,12 +10,15 @@ public class DrawComponents extends JPanel {
      * Constructor for passing watter network
      * @param wn
      */
-    public DrawComponents(WaterNetwork wn) {
+    public MainPanel(WaterNetwork wn, int glyphSize)
+    {
         this.wn = wn;
+        this.reservoirWidth = glyphSize;
+        this.reservoirHeight = glyphSize;
     }
 
     /**
-     * Overrided paintComponent
+     * Override paintComponent
      * @param g
      */
     @Override
@@ -26,12 +29,7 @@ public class DrawComponents extends JPanel {
         Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
         Translator.getInstance().setTranslatedHeight(getHeight() - reservoirWidth);
 
-
-        DrawReservoir dr = new DrawReservoir(g2);
-        DrawPipes dp = new DrawPipes(g2);
-        DrawNodes dn = new DrawNodes(g2);
-        DrawValves dv = new DrawValves(g2);
-        DrawArrow da = new DrawArrow(g2);
+        DrawNetworkComponents drawNetworkComponents = new DrawNetworkComponents(g2);
 
         double maxX = 0, maxY = 0;
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
@@ -51,20 +49,21 @@ public class DrawComponents extends JPanel {
 
 
         for (Pipe p : wn.getAllPipes()) {
-            dp.draw(p, reservoirWidth, reservoirHeight);
-            dv.draw(p, reservoirWidth, reservoirHeight);
-            da.draw(p, reservoirWidth,reservoirHeight);
+            drawNetworkComponents.drawPipes(p,reservoirWidth,reservoirHeight);
+            drawNetworkComponents.drawValves(p, reservoirWidth, reservoirHeight);
+            drawNetworkComponents.drawArrows(p, reservoirWidth, reservoirHeight);
         }
 
         for (NetworkNode Nn : wn.getAllNetworkNodes()) {
             if (Nn instanceof Reservoir) {
-                dr.draw((Reservoir) Nn, reservoirWidth, reservoirHeight);
+                drawNetworkComponents.drawReservoirs((Reservoir) Nn, reservoirWidth, reservoirHeight);
+
             }
         }
 
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
             if (!(nn instanceof Reservoir)) {
-                dn.draw(nn, 50, 50);
+                drawNetworkComponents.drawNodes(nn, 50, 50);
             }
         }
 

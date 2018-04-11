@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.geom.Point2D;
 
+@Deprecated
 public class DrawValves {
     Point2D vector;
     private Graphics2D g;

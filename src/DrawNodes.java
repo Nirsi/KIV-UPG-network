@@ -1,5 +1,6 @@
 import java.awt.*;
 
+@Deprecated
 public class DrawNodes
 {
     private Graphics2D g;
