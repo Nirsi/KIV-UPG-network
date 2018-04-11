@@ -12,7 +12,7 @@ public class Main
         WaterNetwork waterNetwork = new WaterNetwork(0);
 
         JFrame frame = new JFrame();
-        MainPanel dc = new MainPanel(waterNetwork);
+        MainPanel dc = new MainPanel(waterNetwork, Integer.parseInt(args[0]));
         dc.setPreferredSize(new Dimension(800,800));
 
         frame.add(dc);

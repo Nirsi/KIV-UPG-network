@@ -10,8 +10,11 @@ public class MainPanel extends JPanel {
      * Constructor for passing watter network
      * @param wn
      */
-    public MainPanel(WaterNetwork wn) {
+    public MainPanel(WaterNetwork wn, int glyphSize)
+    {
         this.wn = wn;
+        this.reservoirWidth = glyphSize;
+        this.reservoirHeight = glyphSize;
     }
 
     /**
