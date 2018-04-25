@@ -1,5 +1,12 @@
+import com.sun.org.apache.xml.internal.resolver.Catalog;
+import javafx.scene.shape.Ellipse;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.geom.Ellipse2D;
+import java.util.HashMap;
 
 public class MainPanel extends JPanel {
     private WaterNetwork wn;
@@ -15,7 +22,47 @@ public class MainPanel extends JPanel {
         this.wn = wn;
         this.reservoirWidth = glyphSize;
         this.reservoirHeight = glyphSize;
+
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                for ( Object key: ((HashMap)ComponentCatalog.getSingleton().get("pipes")).keySet())
+                {
+
+                    Pipe pipeKey = (Pipe) key;
+                    if (((Ellipse2D.Double)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").get("object")).contains(e.getPoint()))
+                    {
+                        ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").put("selected", true);
+                        System.out.println("Selected added");
+                    }
+                }
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
+
     }
+
+
+
 
     /**
      * Override paintComponent
@@ -25,6 +72,14 @@ public class MainPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+
+
+        (new HashMap<>()).keySet();
+
+
+
+
+
 
         Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
         Translator.getInstance().setTranslatedHeight(getHeight() - reservoirWidth);

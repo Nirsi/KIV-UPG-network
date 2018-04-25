@@ -110,12 +110,29 @@ public class DrawNetworkComponents {
         int valveHeight = 50;
 
         g.setColor(new Color(255, 215, 0));
+
+
+
+        if ((ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected")) != null)
+        {
+            if ((boolean)(ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected")))
+            {
+                //System.out.println("SELECTED");
+                g.setColor(new Color(255, 20, 200));
+            }
+        }
+
+
         Ellipse2D valve = new Ellipse2D.Double(
                 (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
                 (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
                 valveWidth,
                 valveHeight);
         g.fill(valve);
+
+        //addin' valve to catalog
+        ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").put("object", valve);
+
 
         Shape c = g.getClip();
 
