@@ -1,6 +1,9 @@
+import javafx.scene.shape.Ellipse;
+
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.text.AttributedString;
@@ -107,11 +110,12 @@ public class DrawNetworkComponents {
         int valveHeight = 50;
 
         g.setColor(new Color(255, 215, 0));
-        g.fillOval(
+        Ellipse2D valve = new Ellipse2D.Double(
                 (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
                 (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
                 valveWidth,
                 valveHeight);
+        g.fill(valve);
 
         Shape c = g.getClip();
 
@@ -122,11 +126,7 @@ public class DrawNetworkComponents {
                 valveHeight);
 
         g.setColor(Color.BLACK);
-        g.fillOval(
-                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
-                (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
-                valveWidth,
-                valveHeight);
+        g.fill(valve);
 
         g.setColor(Color.BLACK);
         g.setClip(c);
