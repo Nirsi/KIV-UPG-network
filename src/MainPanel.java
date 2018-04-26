@@ -1,6 +1,3 @@
-import com.sun.org.apache.xml.internal.resolver.Catalog;
-import javafx.scene.shape.Ellipse;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -13,12 +10,14 @@ public class MainPanel extends JPanel {
     private int reservoirWidth = 150;
     private int reservoirHeight = 150;
 
+    //private Pipe currentlySelected;
+
     /**
      * Constructor for passing watter network
+     *
      * @param wn
      */
-    public MainPanel(WaterNetwork wn, int glyphSize)
-    {
+    public MainPanel(WaterNetwork wn, int glyphSize) {
         this.wn = wn;
         this.reservoirWidth = glyphSize;
         this.reservoirHeight = glyphSize;
@@ -26,59 +25,54 @@ public class MainPanel extends JPanel {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                for ( Object key: ((HashMap)ComponentCatalog.getSingleton().get("pipes")).keySet())
-                {
-
+                for (Object key : ((HashMap) ComponentCatalog.getSingleton().get("pipes")).keySet()) {
                     Pipe pipeKey = (Pipe) key;
-                    if (((Ellipse2D.Double)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").get("object")).contains(e.getPoint()))
-                    {
+
+
+                    if (((Ellipse2D.Double) ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").get("object")).contains(e.getPoint())) {
+                        if (Main.currentlySelectedValve != null) {
+                            ComponentCatalog.getSingleton().nestInto("pipes").nestInto(Main.currentlySelectedValve).nestInto("valve").put("selected", false);
+                        }
                         ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").put("selected", true);
-                        System.out.println("Selected added");
+                        Main.currentlySelectedValve = pipeKey;
+
                     }
+//                    else
+//                    {
+//                        ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").put("selected", false);
+//                    }
                 }
             }
 
             @Override
             public void mousePressed(MouseEvent e) {
-
             }
 
             @Override
             public void mouseReleased(MouseEvent e) {
-
             }
 
             @Override
             public void mouseEntered(MouseEvent e) {
-
             }
 
             @Override
             public void mouseExited(MouseEvent e) {
-
             }
         });
 
     }
 
 
-
-
     /**
      * Override paintComponent
+     *
      * @param g
      */
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-
-
-        (new HashMap<>()).keySet();
-
-
-
-
 
 
         Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
@@ -104,7 +98,7 @@ public class MainPanel extends JPanel {
 
 
         for (Pipe p : wn.getAllPipes()) {
-            drawNetworkComponents.drawPipes(p,reservoirWidth,reservoirHeight);
+            drawNetworkComponents.drawPipes(p, reservoirWidth, reservoirHeight);
             drawNetworkComponents.drawValves(p, reservoirWidth, reservoirHeight);
             drawNetworkComponents.drawArrows(p, reservoirWidth, reservoirHeight);
         }

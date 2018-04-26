@@ -30,4 +30,6 @@ public class Main
             Thread.sleep(20);
         }
     }
+
+    public static Pipe currentlySelectedValve;
 }

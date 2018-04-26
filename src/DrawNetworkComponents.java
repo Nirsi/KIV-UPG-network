@@ -1,5 +1,3 @@
-import javafx.scene.shape.Ellipse;
-
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
@@ -12,8 +10,7 @@ public class DrawNetworkComponents {
 
     Graphics2D g;
 
-    public DrawNetworkComponents(Graphics2D g)
-    {
+    public DrawNetworkComponents(Graphics2D g) {
         this.g = g;
     }
 
@@ -48,7 +45,6 @@ public class DrawNetworkComponents {
 
 
     /**
-     *
      * @param pipe
      * @param width
      * @param height
@@ -62,6 +58,7 @@ public class DrawNetworkComponents {
 
     /**
      * Drawing of Pipes
+     *
      * @param pipe
      * @param color
      * @param strokeSize
@@ -81,13 +78,11 @@ public class DrawNetworkComponents {
     }
 
     /**
-     *
      * @param node
      * @param width
      * @param height
      */
-    public void drawNodes(NetworkNode node, int width, int height)
-    {
+    public void drawNodes(NetworkNode node, int width, int height) {
         g.setColor(new Color(50, 50, 50));
         g.fillOval(
                 (int) Translator.getInstance().getTranslatedX(node.position.getX()) + width,
@@ -99,6 +94,7 @@ public class DrawNetworkComponents {
 
     /**
      * Drawing method
+     *
      * @param pipe
      * @param reservoirWidth
      * @param reservoirHeight
@@ -112,14 +108,13 @@ public class DrawNetworkComponents {
         g.setColor(new Color(255, 215, 0));
 
 
+//        if (pipe == Main.currentlySelectedValve)
+//            g.setColor(new Color(255, 20, 200));
 
-        if ((ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected")) != null)
-        {
-            if ((boolean)(ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected")))
-            {
-                //System.out.println("SELECTED");
-                g.setColor(new Color(255, 20, 200));
-            }
+        if ((ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected")) != null &&
+                (boolean) (ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected"))) {
+            //System.out.println("SELECTED");
+            g.setColor(new Color(255, 20, 200));
         }
 
 
@@ -151,6 +146,7 @@ public class DrawNetworkComponents {
 
     /**
      * Computing vector
+     *
      * @param pipe
      */
     private Point2D computeVector(Pipe pipe) {
@@ -241,6 +237,7 @@ public class DrawNetworkComponents {
 
     /**
      * Drawing method
+     *
      * @param pipe
      * @param arrowStart
      * @param arrowEnd
