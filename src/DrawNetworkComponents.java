@@ -1,3 +1,5 @@
+import com.sun.org.apache.xml.internal.resolver.CatalogManager;
+
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.AffineTransform;
@@ -164,11 +166,14 @@ public class DrawNetworkComponents {
      * @param reservoirWidth
      * @param reservoirHeight
      */
-    public void drawArrows(Pipe pipe, int reservoirWidth, int reservoirHeight) {
+    public void drawArrows(Pipe pipe, int reservoirWidth, int reservoirHeight)
+    {
 
         Point2D vector;
         Point2D arrowStart;
         Point2D arrowEnd;
+        Point2D middle;
+        int circleSize = 100;
 
         g.setStroke(new BasicStroke(2));
         vector = new Point2D.Double(
@@ -185,6 +190,11 @@ public class DrawNetworkComponents {
                 pipe.start.position.getX() + vector.getX() * 0.75,
                 pipe.start.position.getY() + vector.getY() * 0.75
         );
+        middle = new Point2D.Double(
+                pipe.start.position.getX() + vector.getX() * 0.675,
+                pipe.start.position.getY() + vector.getY() * 0.675
+        );
+
         arrowStart = new Point2D.Double(
                 Translator.getInstance().getTranslatedX(arrowStart.getX()) + reservoirWidth / 2,
                 Translator.getInstance().getTranslatedY(arrowStart.getY()) + reservoirHeight / 2
@@ -193,6 +203,10 @@ public class DrawNetworkComponents {
                 Translator.getInstance().getTranslatedX(arrowEnd.getX()) + reservoirWidth / 2,
                 Translator.getInstance().getTranslatedY(arrowEnd.getY()) + reservoirHeight / 2
         );
+        middle = new Point2D.Double(
+                Translator.getInstance().getTranslatedX(middle.getX()) + reservoirWidth / 2,
+                Translator.getInstance().getTranslatedY(middle.getY()) + reservoirHeight / 2
+        );
 
         drawTexts(pipe, arrowStart, arrowEnd);
         if (pipe.flow >= 0) {
@@ -200,6 +214,19 @@ public class DrawNetworkComponents {
         } else {
             drawArrow((int) arrowEnd.getX(), (int) arrowStart.getX(), (int) arrowEnd.getY(), (int) arrowStart.getY(), 15);
         }
+
+        //Testing to draw circles
+
+
+
+
+        //TODO: add dynamic circle size for better clicking experience
+        Ellipse2D detectionCircle = new Ellipse2D.Double((int) middle.getX(),(int) middle.getY(),circleSize,circleSize);
+        detectionCircle = new Ellipse2D.Double(detectionCircle.getX() - circleSize/2, detectionCircle.getY() - circleSize/2, circleSize,circleSize);
+
+        g.drawOval((int)detectionCircle.getX(), (int)detectionCircle.getY(), circleSize,circleSize);
+        ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("arrow").put("detection", detectionCircle);
+
     }
 
     /**

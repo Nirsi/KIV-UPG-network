@@ -1,4 +1,8 @@
+import sun.plugin.dom.css.RGBColor;
+
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.*;
 
 public class Main
@@ -12,16 +16,46 @@ public class Main
         WaterNetwork waterNetwork = new WaterNetwork(0);
 
         JFrame frame = new JFrame();
-        MainPanel dc = new MainPanel(waterNetwork, Integer.parseInt("150"));
-        dc.setPreferredSize(new Dimension(800,800));
+        frame.setPreferredSize(new Dimension(1100,800));
+        frame.setLayout(new BorderLayout());
 
-        frame.add(dc);
+        MainPanel dc = new MainPanel(waterNetwork, Integer.parseInt("150"));
+        //dc.setPreferredSize(new Dimension(800,800));
+        dc.setMinimumSize(new Dimension(800,800));
+
+        JPanel toolPanel = new JPanel();
+        toolPanel.setPreferredSize(new Dimension(200, 800));
+        toolPanel.setBackground(new Color(178, 178, 178));
+
+        Label labilni = new Label("Valve");
+
+        slider = new JSlider(JSlider.HORIZONTAL, 0,100,50);
+
+        slider.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                currentlySelectedValve.open = (((JSlider)e.getSource()).getValue() / 100.0);
+            }
+        });
+
+        toolPanel.add(labilni);
+        toolPanel.add(slider);
+
+
+
+        frame.add(dc, BorderLayout.CENTER);
+        frame.add(toolPanel,BorderLayout.EAST);
+        //frame.add(dc);
+
+
 
         frame.setTitle("UPG - water network visualisation");
         frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+
 
         for(;;)
         {
@@ -32,4 +66,5 @@ public class Main
     }
 
     public static Pipe currentlySelectedValve;
+    public static JSlider slider;
 }

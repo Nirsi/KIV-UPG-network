@@ -22,6 +22,12 @@ public class MainPanel extends JPanel {
         this.reservoirWidth = glyphSize;
         this.reservoirHeight = glyphSize;
 
+        addMouseListener();
+
+    }
+
+    private void addMouseListener()
+    {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -35,12 +41,12 @@ public class MainPanel extends JPanel {
                         }
                         ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").put("selected", true);
                         Main.currentlySelectedValve = pipeKey;
-
+                        Main.slider.setValue((int)(pipeKey.open * 100));
                     }
-//                    else
-//                    {
-//                        ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").put("selected", false);
-//                    }
+                    if (((Ellipse2D.Double)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("arrow").get("detection")).contains(e.getPoint()))
+                    {
+                        System.out.println("Arrow click detected");
+                    }
                 }
             }
 
@@ -60,7 +66,6 @@ public class MainPanel extends JPanel {
             public void mouseExited(MouseEvent e) {
             }
         });
-
     }
 
 
