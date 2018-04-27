@@ -5,6 +5,8 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import java.awt.*;
 
+import org.jfree.chart.*;
+
 public class Main
 {
     /**
@@ -27,25 +29,19 @@ public class Main
         toolPanel.setPreferredSize(new Dimension(200, 800));
         toolPanel.setBackground(new Color(178, 178, 178));
 
-        Label labilni = new Label("Valve");
-
         slider = new JSlider(JSlider.HORIZONTAL, 0,100,50);
 
-        slider.addChangeListener(new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                currentlySelectedValve.open = (((JSlider)e.getSource()).getValue() / 100.0);
-            }
-        });
+        slider.addChangeListener(e -> currentlySelectedValve.open = (((JSlider)e.getSource()).getValue() / 100.0));
 
-        toolPanel.add(labilni);
+        toolPanel.add(new Label("Valve"));
         toolPanel.add(slider);
+
 
 
 
         frame.add(dc, BorderLayout.CENTER);
         frame.add(toolPanel,BorderLayout.EAST);
-        //frame.add(dc);
+
 
 
 
@@ -54,6 +50,11 @@ public class Main
         frame.pack();
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+
+
+        graphWindow = new JDialog(frame, "Title");
+        graphWindow.setSize(600,500);
+        graphWindow.setLocationByPlatform(true);
 
 
 
@@ -67,4 +68,5 @@ public class Main
 
     public static Pipe currentlySelectedValve;
     public static JSlider slider;
+    public static JDialog graphWindow;
 }

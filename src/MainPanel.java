@@ -5,10 +5,20 @@ import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.util.HashMap;
 
+import org.jfree.chart.*;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.*;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 public class MainPanel extends JPanel {
     private WaterNetwork wn;
     private int reservoirWidth = 150;
     private int reservoirHeight = 150;
+    private JFreeChart lineChart;
 
     //private Pipe currentlySelected;
 
@@ -46,6 +56,7 @@ public class MainPanel extends JPanel {
                     if (((Ellipse2D.Double)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("arrow").get("detection")).contains(e.getPoint()))
                     {
                         System.out.println("Arrow click detected");
+                        prepareChart();
                     }
                 }
             }
@@ -66,6 +77,54 @@ public class MainPanel extends JPanel {
             public void mouseExited(MouseEvent e) {
             }
         });
+    }
+    private void prepareChart()
+    {
+        JFreeChart xylineChart = ChartFactory.createXYLineChart(
+                "test" ,
+                "Category" ,
+                "Score" ,
+                createDataset() ,
+                PlotOrientation.VERTICAL ,
+                true , true , false);
+
+        ChartPanel chartPanel = new ChartPanel( xylineChart );
+        chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
+        final XYPlot plot = xylineChart.getXYPlot( );
+
+        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( );
+        renderer.setSeriesPaint( 0 , Color.RED );
+        renderer.setSeriesPaint( 1 , Color.GREEN );
+        renderer.setSeriesPaint( 2 , Color.YELLOW );
+        renderer.setSeriesStroke( 0 , new BasicStroke( 4.0f ) );
+        renderer.setSeriesStroke( 1 , new BasicStroke( 3.0f ) );
+        renderer.setSeriesStroke( 2 , new BasicStroke( 2.0f ) );
+        plot.setRenderer( renderer );
+        Main.graphWindow.add(chartPanel);
+        Main.graphWindow.setSize(new Dimension(600,400));
+        Main.graphWindow.setVisible(true);
+    }
+    private XYDataset createDataset( ) {
+        final XYSeries firefox = new XYSeries( "Firefox" );
+        firefox.add( 1.0 , 1.0 );
+        firefox.add( 2.0 , 4.0 );
+        firefox.add( 3.0 , 3.0 );
+
+        final XYSeries chrome = new XYSeries( "Chrome" );
+        chrome.add( 1.0 , 4.0 );
+        chrome.add( 2.0 , 5.0 );
+        chrome.add( 3.0 , 6.0 );
+
+        final XYSeries iexplorer = new XYSeries( "InternetExplorer" );
+        iexplorer.add( 3.0 , 4.0 );
+        iexplorer.add( 4.0 , 5.0 );
+        iexplorer.add( 5.0 , 4.0 );
+
+        final XYSeriesCollection dataset = new XYSeriesCollection( );
+        dataset.addSeries( firefox );
+        dataset.addSeries( chrome );
+        dataset.addSeries( iexplorer );
+        return dataset;
     }
 
 
@@ -120,6 +179,8 @@ public class MainPanel extends JPanel {
                 drawNetworkComponents.drawNodes(nn, 50, 50);
             }
         }
+
+
 
 
     }
