@@ -1,4 +1,6 @@
 import com.sun.org.apache.xml.internal.resolver.CatalogManager;
+import javafx.scene.chart.XYChart;
+import org.jfree.data.xy.XYSeries;
 
 import java.awt.*;
 import java.awt.font.TextAttribute;
@@ -56,6 +58,8 @@ public class DrawNetworkComponents {
         drawPipe(pipe, new Color(50, 50, 50), 15, width, height);
         //Woda
         drawPipe(pipe, Color.BLUE, 12, width, height);
+
+
     }
 
     /**

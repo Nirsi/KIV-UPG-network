@@ -56,7 +56,7 @@ public class MainPanel extends JPanel {
                     if (((Ellipse2D.Double)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("arrow").get("detection")).contains(e.getPoint()))
                     {
                         System.out.println("Arrow click detected");
-                        prepareChart();
+                        prepareChart(pipeKey);
                     }
                 }
             }
@@ -78,52 +78,31 @@ public class MainPanel extends JPanel {
             }
         });
     }
-    private void prepareChart()
+    private void prepareChart(Pipe pipeKey)
     {
         JFreeChart xylineChart = ChartFactory.createXYLineChart(
-                "test" ,
-                "Category" ,
-                "Score" ,
-                createDataset() ,
+                "Průtok potrubím" ,
+                "čas" ,
+                "zaplnění" ,
+                createDataset(pipeKey) ,
                 PlotOrientation.VERTICAL ,
                 true , true , false);
 
         ChartPanel chartPanel = new ChartPanel( xylineChart );
-        chartPanel.setPreferredSize( new java.awt.Dimension( 560 , 367 ) );
+        chartPanel.setPreferredSize( new Dimension( 560 , 367 ));
         final XYPlot plot = xylineChart.getXYPlot( );
 
         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( );
-        renderer.setSeriesPaint( 0 , Color.RED );
-        renderer.setSeriesPaint( 1 , Color.GREEN );
-        renderer.setSeriesPaint( 2 , Color.YELLOW );
-        renderer.setSeriesStroke( 0 , new BasicStroke( 4.0f ) );
-        renderer.setSeriesStroke( 1 , new BasicStroke( 3.0f ) );
-        renderer.setSeriesStroke( 2 , new BasicStroke( 2.0f ) );
+        renderer.setSeriesPaint( 0 , new Color(40, 132,255) );
+        renderer.setSeriesStroke( 0 , new BasicStroke( 1.0f ) );
         plot.setRenderer( renderer );
-        Main.graphWindow.add(chartPanel);
+//        Main.graphWindow.add(chartPanel);
         Main.graphWindow.setSize(new Dimension(600,400));
         Main.graphWindow.setVisible(true);
     }
-    private XYDataset createDataset( ) {
-        final XYSeries firefox = new XYSeries( "Firefox" );
-        firefox.add( 1.0 , 1.0 );
-        firefox.add( 2.0 , 4.0 );
-        firefox.add( 3.0 , 3.0 );
-
-        final XYSeries chrome = new XYSeries( "Chrome" );
-        chrome.add( 1.0 , 4.0 );
-        chrome.add( 2.0 , 5.0 );
-        chrome.add( 3.0 , 6.0 );
-
-        final XYSeries iexplorer = new XYSeries( "InternetExplorer" );
-        iexplorer.add( 3.0 , 4.0 );
-        iexplorer.add( 4.0 , 5.0 );
-        iexplorer.add( 5.0 , 4.0 );
-
+    private XYDataset createDataset( Pipe pipeKey) {
         final XYSeriesCollection dataset = new XYSeriesCollection( );
-        dataset.addSeries( firefox );
-        dataset.addSeries( chrome );
-        dataset.addSeries( iexplorer );
+        dataset.addSeries( (XYSeries)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("flow").get("series"));
         return dataset;
     }
 
@@ -165,6 +144,10 @@ public class MainPanel extends JPanel {
             drawNetworkComponents.drawPipes(p, reservoirWidth, reservoirHeight);
             drawNetworkComponents.drawValves(p, reservoirWidth, reservoirHeight);
             drawNetworkComponents.drawArrows(p, reservoirWidth, reservoirHeight);
+
+            if (ComponentCatalog.getSingleton().nestInto("pipes").nestInto(p).nestInto("flow").get("series") == null)
+                ComponentCatalog.getSingleton().nestInto("pipes").nestInto(p).nestInto("flow").put("series",new XYSeries("flow"));
+            ((XYSeries)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(p).nestInto("flow").get("series")).add(wn.currentSimulationTime(),Math.abs(p.flow));
         }
 
         for (NetworkNode Nn : wn.getAllNetworkNodes()) {
