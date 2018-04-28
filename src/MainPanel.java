@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.plaf.synth.Region;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -61,21 +62,21 @@ public class MainPanel extends JPanel {
                 }
             }
 
+            //region Useless
             @Override
             public void mousePressed(MouseEvent e) {
             }
-
             @Override
             public void mouseReleased(MouseEvent e) {
             }
-
             @Override
             public void mouseEntered(MouseEvent e) {
             }
-
             @Override
             public void mouseExited(MouseEvent e) {
             }
+            //endregion
+
         });
     }
     private void prepareChart(Pipe pipeKey)
@@ -90,13 +91,9 @@ public class MainPanel extends JPanel {
 
         ChartPanel chartPanel = new ChartPanel( xylineChart );
         chartPanel.setPreferredSize( new Dimension( 560 , 367 ));
-        final XYPlot plot = xylineChart.getXYPlot( );
 
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer( );
-        renderer.setSeriesPaint( 0 , new Color(40, 132,255) );
-        renderer.setSeriesStroke( 0 , new BasicStroke( 1.0f ) );
-        plot.setRenderer( renderer );
-//        Main.graphWindow.add(chartPanel);
+        Main.graphWindow = new JDialog();
+        Main.graphWindow.add(chartPanel);
         Main.graphWindow.setSize(new Dimension(600,400));
         Main.graphWindow.setVisible(true);
     }

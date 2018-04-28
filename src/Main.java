@@ -15,7 +15,7 @@ public class Main
      * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
-        WaterNetwork waterNetwork = new WaterNetwork(0);
+        WaterNetwork waterNetwork = new WaterNetwork(3);
 
         JFrame frame = new JFrame();
         frame.setPreferredSize(new Dimension(1100,800));
