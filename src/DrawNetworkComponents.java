@@ -4,10 +4,7 @@ import org.jfree.data.xy.XYSeries;
 
 import java.awt.*;
 import java.awt.font.TextAttribute;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.text.AttributedString;
 
 public class DrawNetworkComponents {
@@ -42,9 +39,15 @@ public class DrawNetworkComponents {
         // Case of Reservoir
         g.setColor(Color.BLACK);
         g.setStroke(new BasicStroke(3));
-        g.drawRect(0, 0, width, height);
+        Rectangle2D test = new Rectangle2D.Double(0, 0, width, height);
+        g.draw(test);
+        ComponentCatalog.getSingleton().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").put("object", test);
+
+        //g.fill((Rectangle2D.Double)ComponentCatalog.getSingleton().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").get("object"));
 
         g.setTransform(baseTransform);
+
+
     }
 
 

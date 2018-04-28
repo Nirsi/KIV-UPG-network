@@ -4,7 +4,9 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
@@ -42,6 +44,20 @@ public class MainPanel extends JPanel {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                for (Object key: ((HashMap) ComponentCatalog.getSingleton().get("reservoirs")).keySet())
+                {
+                    Reservoir resKey = (Reservoir) key;
+                    double x = ((Rectangle2D.Double)ComponentCatalog.getSingleton().nestInto("reservoirs").nestInto(resKey).nestInto("reservoir").get("object")).getX();
+                    double y = ((Rectangle2D.Double)ComponentCatalog.getSingleton().nestInto("reservoirs").nestInto(resKey).nestInto("reservoir").get("object")).getY();
+
+                    Rectangle2D test = new Rectangle2D.Double(Translator.getInstance().getTranslatedX(x), Translator.getInstance().getTranslatedY(y), 150, 150);
+
+                    if (test.contains(e.getPoint()))
+                    {
+                        System.out.println("Reservoir click detected");
+                    }
+                }
+
                 for (Object key : ((HashMap) ComponentCatalog.getSingleton().get("pipes")).keySet()) {
                     Pipe pipeKey = (Pipe) key;
 
@@ -61,7 +77,6 @@ public class MainPanel extends JPanel {
                     }
                 }
             }
-
             //region Useless
             @Override
             public void mousePressed(MouseEvent e) {
@@ -76,7 +91,6 @@ public class MainPanel extends JPanel {
             public void mouseExited(MouseEvent e) {
             }
             //endregion
-
         });
     }
     private void prepareChart(Pipe pipeKey)
