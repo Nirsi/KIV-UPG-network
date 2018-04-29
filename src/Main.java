@@ -13,7 +13,10 @@ import org.jfree.chart.*;
 
 public class Main
 {
-   private static WaterNetwork waterNetwork;
+
+    private static JPanel mainPanel;
+    private static JPanel toolPanel;
+    private static WaterNetwork waterNetwork;
     /**
      * Entry point of program
      * @param args
@@ -26,7 +29,7 @@ public class Main
         frame.setPreferredSize(new Dimension(1100,800));
         frame.setLayout(new BorderLayout());
 
-        MainPanel mainPanel = new MainPanel(waterNetwork, Integer.parseInt("150"));
+        mainPanel = new MainPanel(waterNetwork, Integer.parseInt("150"));
         //mainPanel.setPreferredSize(new Dimension(800,800));
         mainPanel.setMinimumSize(new Dimension(800,800));
 
@@ -40,7 +43,7 @@ public class Main
         graphWindow.setSize(600,500);
         graphWindow.setLocationByPlatform(true);
 
-        JPanel toolPanel = new JPanel();
+        toolPanel = new JPanel();
         initToolPanel(toolPanel);
 
 
@@ -141,7 +144,9 @@ public class Main
         btSvgExport.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                //SVGGraphics2D svgGraphics2D = new SVGGraphics2D(640, 480);
+//                SVGGraphics2D svgGraphics2D = new SVGGraphics2D(640, 480);
+//                mainPanel.paintComponents(svgGraphics2D);
+//                System.out.println(svgGraphics2D.getSVGElement());
 
             }
             //region USELESS METHODS HERE
@@ -169,8 +174,6 @@ public class Main
 
             //endregion
         });
-
-
 
     }
 
