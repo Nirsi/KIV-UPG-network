@@ -1,18 +1,14 @@
 import javax.swing.*;
-import javax.swing.plaf.synth.Region;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
+import java.lang.reflect.Type;
 import java.util.HashMap;
-import java.util.HashSet;
 
 import org.jfree.chart.*;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
-import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
-import org.jfree.data.*;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -44,36 +40,33 @@ public class MainPanel extends JPanel {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                for (Object key: ((HashMap) ComponentCatalog.getSingleton().get("reservoirs")).keySet())
+                for (Object key: ((HashMap) ComponentCatalog.getInstance().get("reservoirs")).keySet())
                 {
                     Reservoir resKey = (Reservoir) key;
-                    double x = ((Rectangle2D.Double)ComponentCatalog.getSingleton().nestInto("reservoirs").nestInto(resKey).nestInto("reservoir").get("object")).getX();
-                    double y = ((Rectangle2D.Double)ComponentCatalog.getSingleton().nestInto("reservoirs").nestInto(resKey).nestInto("reservoir").get("object")).getY();
 
-                    Rectangle2D test = new Rectangle2D.Double(Translator.getInstance().getTranslatedX(x), Translator.getInstance().getTranslatedY(y), 150, 150);
-
-                    if (test.contains(e.getPoint()))
+                    if (((Rectangle2D.Double)ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(resKey).nestInto("reservoir").get("object")).contains(e.getPoint()))
                     {
                         System.out.println("Reservoir click detected");
+                        prepareChart(resKey, "reservoir", "Hladina nádrže", "Hladina", "čas");
                     }
                 }
 
-                for (Object key : ((HashMap) ComponentCatalog.getSingleton().get("pipes")).keySet()) {
+                for (Object key : ((HashMap) ComponentCatalog.getInstance().get("pipes")).keySet()) {
                     Pipe pipeKey = (Pipe) key;
 
 
-                    if (((Ellipse2D.Double) ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").get("object")).contains(e.getPoint())) {
+                    if (((Ellipse2D.Double) ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipeKey).nestInto("valve").get("object")).contains(e.getPoint())) {
                         if (Main.currentlySelectedValve != null) {
-                            ComponentCatalog.getSingleton().nestInto("pipes").nestInto(Main.currentlySelectedValve).nestInto("valve").put("selected", false);
+                            ComponentCatalog.getInstance().nestInto("pipes").nestInto(Main.currentlySelectedValve).nestInto("valve").put("selected", false);
                         }
-                        ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("valve").put("selected", true);
+                        ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipeKey).nestInto("valve").put("selected", true);
                         Main.currentlySelectedValve = pipeKey;
                         Main.slider.setValue((int)(pipeKey.open * 100));
                     }
-                    if (((Ellipse2D.Double)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("arrow").get("detection")).contains(e.getPoint()))
+                    if (((Ellipse2D.Double)ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipeKey).nestInto("arrow").get("detection")).contains(e.getPoint()))
                     {
                         System.out.println("Arrow click detected");
-                        prepareChart(pipeKey);
+                        prepareChart(pipeKey, "pipe", "Průtok potrubím", "Průtok", "čas");
                     }
                 }
             }
@@ -93,13 +86,13 @@ public class MainPanel extends JPanel {
             //endregion
         });
     }
-    private void prepareChart(Pipe pipeKey)
+    private void prepareChart(Object key, String type, String title, String XAxis, String YAxis)
     {
         JFreeChart xylineChart = ChartFactory.createXYLineChart(
-                "Průtok potrubím" ,
-                "čas" ,
-                "zaplnění" ,
-                createDataset(pipeKey) ,
+                title ,
+                YAxis ,
+                XAxis ,
+                createDataset(key, type) ,
                 PlotOrientation.VERTICAL ,
                 true , true , false);
 
@@ -111,9 +104,12 @@ public class MainPanel extends JPanel {
         Main.graphWindow.setSize(new Dimension(600,400));
         Main.graphWindow.setVisible(true);
     }
-    private XYDataset createDataset( Pipe pipeKey) {
+    private XYDataset createDataset( Object key, String type) {
         final XYSeriesCollection dataset = new XYSeriesCollection( );
-        dataset.addSeries( (XYSeries)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipeKey).nestInto("flow").get("series"));
+        if (type.equals("pipe"))
+            dataset.addSeries( (XYSeries)ComponentCatalog.getInstance().nestInto("pipes").nestInto(key).nestInto("flow").get("series"));
+        else
+            dataset.addSeries( (XYSeries)ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(key).nestInto("reservoir").get("series"));
         return dataset;
     }
 
@@ -156,14 +152,19 @@ public class MainPanel extends JPanel {
             drawNetworkComponents.drawValves(p, reservoirWidth, reservoirHeight);
             drawNetworkComponents.drawArrows(p, reservoirWidth, reservoirHeight);
 
-            if (ComponentCatalog.getSingleton().nestInto("pipes").nestInto(p).nestInto("flow").get("series") == null)
-                ComponentCatalog.getSingleton().nestInto("pipes").nestInto(p).nestInto("flow").put("series",new XYSeries("flow"));
-            ((XYSeries)ComponentCatalog.getSingleton().nestInto("pipes").nestInto(p).nestInto("flow").get("series")).add(wn.currentSimulationTime(),Math.abs(p.flow));
+            if (ComponentCatalog.getInstance().nestInto("pipes").nestInto(p).nestInto("flow").get("series") == null)
+                ComponentCatalog.getInstance().nestInto("pipes").nestInto(p).nestInto("flow").put("series",new XYSeries("flow"));
+            ((XYSeries)ComponentCatalog.getInstance().nestInto("pipes").nestInto(p).nestInto("flow").get("series")).add(wn.currentSimulationTime(),Math.abs(p.flow));
         }
 
         for (NetworkNode Nn : wn.getAllNetworkNodes()) {
             if (Nn instanceof Reservoir) {
                 drawNetworkComponents.drawReservoirs((Reservoir) Nn, reservoirWidth, reservoirHeight);
+
+                if (ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(Nn).nestInto("reservoir").get("series") == null)
+                    ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(Nn).nestInto("reservoir").put("series", new XYSeries("flow"));
+                ((XYSeries)ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(Nn).nestInto("reservoir").get("series")).add(wn.currentSimulationTime(), Math.abs(((Reservoir)Nn).content));
+
 
             }
         }

@@ -9,7 +9,7 @@ public class ComponentCatalog {
 
     }
 
-    public static ComponentCatalog getSingleton() {
+    public static ComponentCatalog getInstance() {
         if (singleton == null) {
             singleton = new ComponentCatalog();
         }

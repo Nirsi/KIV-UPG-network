@@ -1,7 +1,3 @@
-import com.sun.org.apache.xml.internal.resolver.CatalogManager;
-import javafx.scene.chart.XYChart;
-import org.jfree.data.xy.XYSeries;
-
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.*;
@@ -39,13 +35,14 @@ public class DrawNetworkComponents {
         // Case of Reservoir
         g.setColor(Color.BLACK);
         g.setStroke(new BasicStroke(3));
-        Rectangle2D test = new Rectangle2D.Double(0, 0, width, height);
-        g.draw(test);
-        ComponentCatalog.getSingleton().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").put("object", test);
-
-        //g.fill((Rectangle2D.Double)ComponentCatalog.getSingleton().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").get("object"));
+//        Rectangle2D test = new Rectangle2D.Double(0, 0, width, height);
+        g.drawRect(0,0,width,height);
 
         g.setTransform(baseTransform);
+        Rectangle2D translatedTest = new Rectangle2D.Double(Translator.getInstance().getTranslatedX(reservoir.position.getX()),Translator.getInstance().getTranslatedY(reservoir.position.getY()),width,height);
+//        g.setColor(Color.YELLOW);
+//        g.draw(translatedTest);
+        ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").put("object", translatedTest);
 
 
     }
@@ -120,8 +117,8 @@ public class DrawNetworkComponents {
 //        if (pipe == Main.currentlySelectedValve)
 //            g.setColor(new Color(255, 20, 200));
 
-        if ((ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected")) != null &&
-                (boolean) (ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected"))) {
+        if ((ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected")) != null &&
+                (boolean) (ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected"))) {
             //System.out.println("SELECTED");
             g.setColor(new Color(255, 20, 200));
         }
@@ -135,7 +132,7 @@ public class DrawNetworkComponents {
         g.fill(valve);
 
         //addin' valve to catalog
-        ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("valve").put("object", valve);
+        ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("valve").put("object", valve);
 
 
         Shape c = g.getClip();
@@ -232,7 +229,7 @@ public class DrawNetworkComponents {
         detectionCircle = new Ellipse2D.Double(detectionCircle.getX() - circleSize/2, detectionCircle.getY() - circleSize/2, circleSize,circleSize);
 
         g.drawOval((int)detectionCircle.getX(), (int)detectionCircle.getY(), circleSize,circleSize);
-        ComponentCatalog.getSingleton().nestInto("pipes").nestInto(pipe).nestInto("arrow").put("detection", detectionCircle);
+        ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("arrow").put("detection", detectionCircle);
 
     }
 
