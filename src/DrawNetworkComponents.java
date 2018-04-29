@@ -222,7 +222,10 @@ public class DrawNetworkComponents {
 
         //Testing to draw circles
 
+        double vx = arrowStart.getX() - arrowEnd.getX();
+        double vy = arrowStart.getY() - arrowEnd.getY();
 
+        circleSize = ((int) Math.sqrt(vx * vx + vy * vy)) + 20;
 
 
         //TODO: add dynamic circle size for better clicking experience
