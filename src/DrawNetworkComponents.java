@@ -6,6 +6,7 @@ import java.text.AttributedString;
 public class DrawNetworkComponents {
 
     Graphics2D g;
+    Color waterColor = new Color(27, 133, 255);
 
     public DrawNetworkComponents(Graphics2D g) {
         this.g = g;
@@ -29,7 +30,7 @@ public class DrawNetworkComponents {
 
         //Water
         g.rotate(Math.toRadians(180), width / 2, height / 2);
-        g.setColor(Color.BLUE);
+        g.setColor(waterColor);
         g.fillRect(0, 0, width, (int) (reservoir.content / reservoir.capacity * height));
 
         // Case of Reservoir
@@ -57,7 +58,7 @@ public class DrawNetworkComponents {
         //Kow
         drawPipe(pipe, new Color(50, 50, 50), 15, width, height);
         //Woda
-        drawPipe(pipe, Color.BLUE, 12, width, height);
+        drawPipe(pipe, waterColor, 12, width, height);
 
 
     }
@@ -89,7 +90,7 @@ public class DrawNetworkComponents {
      * @param height
      */
     public void drawNodes(NetworkNode node, int width, int height) {
-        g.setColor(new Color(50, 50, 50));
+        g.setColor(waterColor);
         g.fillOval(
                 (int) Translator.getInstance().getTranslatedX(node.position.getX()) + width,
                 (int) Translator.getInstance().getTranslatedY(node.position.getY()) + width,

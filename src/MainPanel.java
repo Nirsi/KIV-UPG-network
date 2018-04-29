@@ -174,11 +174,10 @@ public class MainPanel extends JPanel {
                 drawNetworkComponents.drawNodes(nn, 50, 50);
             }
         }
-
-
-
-
     }
-
+    public void drawWith(Graphics2D g2)
+    {
+        paintComponent(g2);
+    }
 
 }
