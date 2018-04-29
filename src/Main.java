@@ -68,16 +68,19 @@ public class Main
 
         JButton btSlow = new JButton("NORMAL");
         JButton btFast = new JButton("FAST AF BOI!");
+        //JButton btSvgExport = new JButton("Export to SVG");
 
 
         toolPanel.add(btFast);
         toolPanel.add(btSlow);
+        //toolPanel.add(btSvgExport);
         toolPanel.add(new Label("Valve"));
         toolPanel.add(slider);
 
         btFast.addMouseListener(new MouseListener() {
             @Override
-            public void mouseClicked(MouseEvent e) {
+            public void mouseClicked(MouseEvent e)
+            {
                 waterNetwork.runFast();
             }
             //region USELESS METHODS HERE
@@ -133,6 +136,8 @@ public class Main
 
             //endregion
         });
+
+
 
 
     }
