@@ -1,3 +1,5 @@
+import javafx.scene.shape.SVGPath;
+import org.jfree.graphics2d.svg.SVGGraphics2D;
 import sun.plugin.dom.css.RGBColor;
 
 import javax.swing.*;
@@ -24,11 +26,9 @@ public class Main
         frame.setPreferredSize(new Dimension(1100,800));
         frame.setLayout(new BorderLayout());
 
-        MainPanel dc = new MainPanel(waterNetwork, Integer.parseInt("150"));
-        //dc.setPreferredSize(new Dimension(800,800));
-        dc.setMinimumSize(new Dimension(800,800));
-
-
+        MainPanel mainPanel = new MainPanel(waterNetwork, Integer.parseInt("150"));
+        //mainPanel.setPreferredSize(new Dimension(800,800));
+        mainPanel.setMinimumSize(new Dimension(800,800));
 
 
         slider = new JSlider(JSlider.HORIZONTAL, 0,100,50);
@@ -44,7 +44,7 @@ public class Main
         initToolPanel(toolPanel);
 
 
-        frame.add(dc, BorderLayout.CENTER);
+        frame.add(mainPanel, BorderLayout.CENTER);
         frame.add(toolPanel,BorderLayout.EAST);
 
         frame.setTitle("UPG - water network visualisation");
@@ -56,7 +56,7 @@ public class Main
         for(;;)
         {
             waterNetwork.updateState();
-            dc.repaint();
+            mainPanel.repaint();
             Thread.sleep(20);
         }
     }
@@ -66,14 +66,15 @@ public class Main
         toolPanel.setPreferredSize(new Dimension(200, 800));
         toolPanel.setBackground(new Color(178, 178, 178));
 
+
         JButton btSlow = new JButton("NORMAL");
         JButton btFast = new JButton("FAST AF BOI!");
-        //JButton btSvgExport = new JButton("Export to SVG");
+        JButton btSvgExport = new JButton("Export to SVG");
 
 
         toolPanel.add(btFast);
         toolPanel.add(btSlow);
-        //toolPanel.add(btSvgExport);
+        toolPanel.add(btSvgExport);
         toolPanel.add(new Label("Valve"));
         toolPanel.add(slider);
 
@@ -137,6 +138,37 @@ public class Main
             //endregion
         });
 
+        btSvgExport.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //SVGGraphics2D svgGraphics2D = new SVGGraphics2D(640, 480);
+
+            }
+            //region USELESS METHODS HERE
+
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+
+            //endregion
+        });
 
 
 
