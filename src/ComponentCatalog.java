@@ -5,7 +5,7 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Rectangle2D;
 import java.util.HashMap;
 
-public class ObjectStack {
+public class ComponentCatalog {
 
     public static HashMap<Reservoir, Rectangle2D> reservoirsDetection = new HashMap<>();
     public static HashMap<Reservoir, XYSeries>  reservoirsGraphs = new HashMap<>();

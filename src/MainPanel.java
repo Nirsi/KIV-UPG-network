@@ -37,49 +37,37 @@ public class MainPanel extends JPanel {
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                for (Object key : ObjectStack.reservoirsDetection.keySet()) {
+                for (Object key : ComponentCatalog.reservoirsDetection.keySet()) {
                     Reservoir resKey = (Reservoir) key;
-                    if (ObjectStack.reservoirsDetection.get(resKey).contains(e.getPoint())) {
+                    if (ComponentCatalog.reservoirsDetection.get(resKey).contains(e.getPoint())) {
                         System.out.println("reser DETECTED");
                         prepareChart(resKey, "res", "Voda v nádrži", "Voda", "čas");
                     }
                 }
 
-                for (Object key : ObjectStack.pipeGraphs.keySet()) {
+                for (Object key : ComponentCatalog.pipeGraphs.keySet()) {
                     Pipe pipeKey = (Pipe) key;
 
-                    if(ObjectStack.arrows.get(pipeKey).contains(e.getPoint()))
+                    if(ComponentCatalog.arrows.get(pipeKey).contains(e.getPoint()))
                     {
                         System.out.println("arrow detected");
-                        prepareChart(pipeKey, "pipe", "Průtok", "Woda", "čas");
+                        prepareChart(pipeKey, "pipe", "Průtok potrubím", "Průtok v čase", "čas");
                     }
                 }
 
 
-                for (Object key : ObjectStack.valves.keySet()) {
+                for (Object key : ComponentCatalog.valves.keySet()) {
                     Pipe pipeKey = (Pipe) key;
 
-                    if ((ObjectStack.valves.get(pipeKey)).contains(e.getPoint())) {
+                    if ((ComponentCatalog.valves.get(pipeKey)).contains(e.getPoint())) {
                         Main.currentlySelectedValve = pipeKey;
                         System.out.println("Valve detected");
                         Main.slider.setValue((int) (pipeKey.open * 100));
                     }
                 }
-
-
-
-//                for (Object key : ComponentCatalog.getInstance().getObjectsStartingWithKey("pipes")) {
-//                    Pipe pipeKey = (Pipe) key;
-//
-//                    }
-//                    if (((Ellipse2D.Double) ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipeKey).nestInto("arrow").get("detection")).contains(e.getPoint())) {
-//                        System.out.println("Arrow click detected");
-//                        prepareChart(pipeKey, "pipe", "Průtok potrubím", "Průtok", "čas");
-//                    }
-//                }
             }
 
-            //region Useless
+            //region Unused methods
             @Override
             public void mousePressed(MouseEvent e) {
             }
@@ -120,9 +108,9 @@ public class MainPanel extends JPanel {
     private XYDataset createDataset(Object key, String type) {
         final XYSeriesCollection dataset = new XYSeriesCollection();
         if (type.equals("pipe")) {
-            dataset.addSeries(ObjectStack.pipeGraphs.get(key));
+            dataset.addSeries(ComponentCatalog.pipeGraphs.get(key));
         } else {
-            dataset.addSeries(ObjectStack.reservoirsGraphs.get(key));
+            dataset.addSeries(ComponentCatalog.reservoirsGraphs.get(key));
         }
         return dataset;
     }
@@ -165,27 +153,33 @@ public class MainPanel extends JPanel {
             drawNetworkComponents.drawValves(p, reservoirWidth, reservoirHeight);
             drawNetworkComponents.drawArrows(p, reservoirWidth, reservoirHeight);
 
-            if (ObjectStack.pipeGraphs.get(p) == null) {
-                ObjectStack.pipeGraphs.put(p, new XYSeries("flow"));
+            if (ComponentCatalog.pipeGraphs.get(p) == null) {
+                ComponentCatalog.pipeGraphs.put(p, new XYSeries("flow"));
             }
-            (ObjectStack.pipeGraphs.get(p)).add(wn.currentSimulationTime(), Math.abs(p.flow));
+            (ComponentCatalog.pipeGraphs.get(p)).add(wn.currentSimulationTime(), Math.abs(p.flow));
         }
 
         for (NetworkNode Nn : wn.getAllNetworkNodes()) {
             if (Nn instanceof Reservoir) {
                 drawNetworkComponents.drawReservoirs((Reservoir) Nn, reservoirWidth, reservoirHeight);
 
-                if (ObjectStack.reservoirsGraphs.get(Nn) == null) {
-                    ObjectStack.reservoirsGraphs.put((Reservoir) Nn, new XYSeries("flow"));
+                if (ComponentCatalog.reservoirsGraphs.get(Nn) == null) {
+                    ComponentCatalog.reservoirsGraphs.put((Reservoir) Nn, new XYSeries("flow"));
                 }
-                ObjectStack.reservoirsGraphs.get(Nn).add(wn.currentSimulationTime(), Math.abs(((Reservoir) Nn).content));
+                ComponentCatalog.reservoirsGraphs.get(Nn).add(wn.currentSimulationTime(), Math.abs(((Reservoir) Nn).content));
 
             }
         }
 
         for (NetworkNode nn : wn.getAllNetworkNodes()) {
             if (!(nn instanceof Reservoir)) {
+
+                //"oprava špatného vykreslení při změně GlyphSize"
+                Translator.getInstance().setTranslatedWidth(getWidth() - 150);
+                Translator.getInstance().setTranslatedHeight(getHeight() - 150);
                 drawNetworkComponents.drawNodes(nn, 50, 50);
+                Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
+                Translator.getInstance().setTranslatedHeight(getHeight() - reservoirWidth);
             }
         }
     }

@@ -2,7 +2,6 @@ import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.*;
 import java.text.AttributedString;
-import java.util.HashMap;
 
 public class DrawNetworkComponents {
 
@@ -45,7 +44,7 @@ public class DrawNetworkComponents {
 //        g.setColor(Color.YELLOW);
 //        g.draw(translatedRectangle);
 
-        ObjectStack.reservoirsDetection.put(reservoir, translatedRectangle);
+        ComponentCatalog.reservoirsDetection.put(reservoir, translatedRectangle);
 
 
 
@@ -128,7 +127,7 @@ public class DrawNetworkComponents {
                 valveWidth,
                 valveHeight);
 
-        if ((ObjectStack.valves.get(pipe)) != null){
+        if ((ComponentCatalog.valves.get(pipe)) != null){
             if(Main.currentlySelectedValve == pipe)
             {
                 Ellipse2D selectionCircle = new Ellipse2D.Double(valve.getX() - 5, valve.getY() - 5, valve.getWidth() + 10, valve.getHeight() + 10);
@@ -143,7 +142,7 @@ public class DrawNetworkComponents {
         g.fill(valve);
 
         //addin' valve to catalog
-        ObjectStack.valves.put(pipe, valve);
+        ComponentCatalog.valves.put(pipe, valve);
 
         Shape c = g.getClip();
 
@@ -239,7 +238,7 @@ public class DrawNetworkComponents {
         detectionCircle = new Ellipse2D.Double(detectionCircle.getX() - circleSize/2, detectionCircle.getY() - circleSize/2, circleSize,circleSize);
 
         g.drawOval((int)detectionCircle.getX(), (int)detectionCircle.getY(), circleSize,circleSize);
-        ObjectStack.arrows.put(pipe, detectionCircle);
+        ComponentCatalog.arrows.put(pipe, detectionCircle);
 
     }
 
