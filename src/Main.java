@@ -1,12 +1,7 @@
-import javafx.scene.shape.SVGPath;
 import org.jfree.graphics2d.svg.SVGGraphics2D;
-import sun.plugin.dom.css.RGBColor;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageWriter;
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -15,9 +10,6 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.Buffer;
-
-import org.jfree.chart.*;
 
 public class Main {
 
@@ -42,8 +34,7 @@ public class Main {
         frame.setPreferredSize(new Dimension(1100, 800));
         frame.setLayout(new BorderLayout());
 
-        mainPanel = new MainPanel(waterNetwork, Integer.parseInt("150"));
-        //mainPanel.setPreferredSize(new Dimension(800,800));
+        mainPanel = new MainPanel(waterNetwork, Integer.parseInt(args[0]));
         mainPanel.setMinimumSize(new Dimension(800, 800));
 
 
@@ -82,7 +73,7 @@ public class Main {
 
 
         JButton btSlow = new JButton("NORMAL");
-        JButton btFast = new JButton("FAST AF BOI!");
+        JButton btFast = new JButton("FAST");
         JButton btSvgExport = new JButton("Export to SVG");
         JButton btPngExport = new JButton("Export to PNG");
 
@@ -128,7 +119,7 @@ public class Main {
             public void mouseClicked(MouseEvent e) {
                 waterNetwork.runNormal();
             }
-            //region USELESS METHODS HERE
+            //region Rest of methods
 
 
             @Override
@@ -160,7 +151,7 @@ public class Main {
                 ExportAsSvg();
 
             }
-            //region USELESS METHODS HERE
+            //region Rest of methods
 
 
             @Override
@@ -192,7 +183,7 @@ public class Main {
                 ExportAsPng();
 
             }
-            //region USELESS METHODS HERE
+            //region Rest of methods
 
 
             @Override
