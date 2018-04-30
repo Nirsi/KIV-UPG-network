@@ -1,16 +1,15 @@
 import java.awt.*;
 import java.awt.font.TextAttribute;
-import java.awt.geom.AffineTransform;
-import java.awt.geom.Line2D;
-import java.awt.geom.Point2D;
+import java.awt.geom.*;
 import java.text.AttributedString;
+import java.util.HashMap;
 
 public class DrawNetworkComponents {
 
     Graphics2D g;
+    Color waterColor = new Color(27, 133, 255);
 
-    public DrawNetworkComponents(Graphics2D g)
-    {
+    public DrawNetworkComponents(Graphics2D g) {
         this.g = g;
     }
 
@@ -32,20 +31,30 @@ public class DrawNetworkComponents {
 
         //Water
         g.rotate(Math.toRadians(180), width / 2, height / 2);
-        g.setColor(Color.BLUE);
+        g.setColor(waterColor);
         g.fillRect(0, 0, width, (int) (reservoir.content / reservoir.capacity * height));
 
         // Case of Reservoir
         g.setColor(Color.BLACK);
         g.setStroke(new BasicStroke(3));
-        g.drawRect(0, 0, width, height);
+//        Rectangle2D test = new Rectangle2D.Double(0, 0, width, height);
+        g.drawRect(0,0,width,height);
 
         g.setTransform(baseTransform);
+        Rectangle2D translatedRectangle = new Rectangle2D.Double(Translator.getInstance().getTranslatedX(reservoir.position.getX()),Translator.getInstance().getTranslatedY(reservoir.position.getY()),width,height);
+//        g.setColor(Color.YELLOW);
+//        g.draw(translatedRectangle);
+
+        ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").put("object", translatedRectangle);
+        ObjectStack.reservoirsDetection.put(reservoir, translatedRectangle);
+
+
+
+
     }
 
 
     /**
-     *
      * @param pipe
      * @param width
      * @param height
@@ -54,11 +63,14 @@ public class DrawNetworkComponents {
         //Kow
         drawPipe(pipe, new Color(50, 50, 50), 15, width, height);
         //Woda
-        drawPipe(pipe, Color.BLUE, 12, width, height);
+        drawPipe(pipe, waterColor, 12, width, height);
+
+
     }
 
     /**
      * Drawing of Pipes
+     *
      * @param pipe
      * @param color
      * @param strokeSize
@@ -78,14 +90,12 @@ public class DrawNetworkComponents {
     }
 
     /**
-     *
      * @param node
      * @param width
      * @param height
      */
-    public void drawNodes(NetworkNode node, int width, int height)
-    {
-        g.setColor(new Color(50, 50, 50));
+    public void drawNodes(NetworkNode node, int width, int height) {
+        g.setColor(waterColor);
         g.fillOval(
                 (int) Translator.getInstance().getTranslatedX(node.position.getX()) + width,
                 (int) Translator.getInstance().getTranslatedY(node.position.getY()) + width,
@@ -96,6 +106,7 @@ public class DrawNetworkComponents {
 
     /**
      * Drawing method
+     *
      * @param pipe
      * @param reservoirWidth
      * @param reservoirHeight
@@ -106,12 +117,35 @@ public class DrawNetworkComponents {
         int valveWidth = 50;
         int valveHeight = 50;
 
-        g.setColor(new Color(255, 215, 0));
-        g.fillOval(
+        g.setColor(new Color(142, 201, 255));
+
+
+//        if (pipe == Main.currentlySelectedValve)
+//            g.setColor(new Color(255, 20, 200));
+
+        Ellipse2D valve = new Ellipse2D.Double(
                 (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
                 (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
                 valveWidth,
                 valveHeight);
+
+        if ((ObjectStack.valves.get(pipe)) != null){
+            if(Main.currentlySelectedValve == pipe)
+            {
+                Ellipse2D selectionCircle = new Ellipse2D.Double(valve.getX() - 5, valve.getY() - 5, valve.getWidth() + 10, valve.getHeight() + 10);
+                g.setColor(new Color(255, 34, 0));
+                g.fill(selectionCircle);
+                g.setColor(new Color(142, 201, 255));
+            }
+
+
+        }
+
+        g.fill(valve);
+
+        //addin' valve to catalog
+        ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("valve").put("object", valve);
+        ObjectStack.valves.put(pipe, valve);
 
         Shape c = g.getClip();
 
@@ -122,11 +156,7 @@ public class DrawNetworkComponents {
                 valveHeight);
 
         g.setColor(Color.BLACK);
-        g.fillOval(
-                (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
-                (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
-                valveWidth,
-                valveHeight);
+        g.fill(valve);
 
         g.setColor(Color.BLACK);
         g.setClip(c);
@@ -134,6 +164,7 @@ public class DrawNetworkComponents {
 
     /**
      * Computing vector
+     *
      * @param pipe
      */
     private Point2D computeVector(Pipe pipe) {
@@ -151,11 +182,13 @@ public class DrawNetworkComponents {
      * @param reservoirWidth
      * @param reservoirHeight
      */
-    public void drawArrows(Pipe pipe, int reservoirWidth, int reservoirHeight) {
-
+    public void drawArrows(Pipe pipe, int reservoirWidth, int reservoirHeight)
+    {
         Point2D vector;
         Point2D arrowStart;
         Point2D arrowEnd;
+        Point2D middle;
+        int circleSize;
 
         g.setStroke(new BasicStroke(2));
         vector = new Point2D.Double(
@@ -172,6 +205,11 @@ public class DrawNetworkComponents {
                 pipe.start.position.getX() + vector.getX() * 0.75,
                 pipe.start.position.getY() + vector.getY() * 0.75
         );
+        middle = new Point2D.Double(
+                pipe.start.position.getX() + vector.getX() * 0.675,
+                pipe.start.position.getY() + vector.getY() * 0.675
+        );
+
         arrowStart = new Point2D.Double(
                 Translator.getInstance().getTranslatedX(arrowStart.getX()) + reservoirWidth / 2,
                 Translator.getInstance().getTranslatedY(arrowStart.getY()) + reservoirHeight / 2
@@ -180,6 +218,10 @@ public class DrawNetworkComponents {
                 Translator.getInstance().getTranslatedX(arrowEnd.getX()) + reservoirWidth / 2,
                 Translator.getInstance().getTranslatedY(arrowEnd.getY()) + reservoirHeight / 2
         );
+        middle = new Point2D.Double(
+                Translator.getInstance().getTranslatedX(middle.getX()) + reservoirWidth / 2,
+                Translator.getInstance().getTranslatedY(middle.getY()) + reservoirHeight / 2
+        );
 
         drawTexts(pipe, arrowStart, arrowEnd);
         if (pipe.flow >= 0) {
@@ -187,6 +229,21 @@ public class DrawNetworkComponents {
         } else {
             drawArrow((int) arrowEnd.getX(), (int) arrowStart.getX(), (int) arrowEnd.getY(), (int) arrowStart.getY(), 15);
         }
+
+        //Testing to draw circles
+
+        double vx = arrowStart.getX() - arrowEnd.getX();
+        double vy = arrowStart.getY() - arrowEnd.getY();
+
+        circleSize = ((int) Math.sqrt(vx * vx + vy * vy)) + 20;
+
+        Ellipse2D detectionCircle = new Ellipse2D.Double((int) middle.getX(),(int) middle.getY(),circleSize,circleSize);
+        detectionCircle = new Ellipse2D.Double(detectionCircle.getX() - circleSize/2, detectionCircle.getY() - circleSize/2, circleSize,circleSize);
+
+        g.drawOval((int)detectionCircle.getX(), (int)detectionCircle.getY(), circleSize,circleSize);
+        ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("arrow").put("detection", detectionCircle);
+        ObjectStack.arrows.put(pipe, detectionCircle);
+
     }
 
     /**
@@ -224,6 +281,7 @@ public class DrawNetworkComponents {
 
     /**
      * Drawing method
+     *
      * @param pipe
      * @param arrowStart
      * @param arrowEnd
@@ -238,7 +296,7 @@ public class DrawNetworkComponents {
                 vx + arrowStart.getY()
         );
 
-        String temp = String.valueOf(Math.round(pipe.flow * 100.0) / 100.0);
+        String temp = String.valueOf(Math.abs(Math.round(pipe.flow * 100.0) / 100.0));
         AttributedString pipeFlow = new AttributedString(temp + " m3/s");
         pipeFlow.addAttribute(TextAttribute.SUPERSCRIPT, TextAttribute.SUPERSCRIPT_SUPER, temp.length() + 2, temp.length() + 3);
 
