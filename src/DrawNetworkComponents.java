@@ -2,6 +2,7 @@ import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.awt.geom.*;
 import java.text.AttributedString;
+import java.util.HashMap;
 
 public class DrawNetworkComponents {
 
@@ -40,10 +41,14 @@ public class DrawNetworkComponents {
         g.drawRect(0,0,width,height);
 
         g.setTransform(baseTransform);
-        Rectangle2D translatedTest = new Rectangle2D.Double(Translator.getInstance().getTranslatedX(reservoir.position.getX()),Translator.getInstance().getTranslatedY(reservoir.position.getY()),width,height);
+        Rectangle2D translatedRectangle = new Rectangle2D.Double(Translator.getInstance().getTranslatedX(reservoir.position.getX()),Translator.getInstance().getTranslatedY(reservoir.position.getY()),width,height);
 //        g.setColor(Color.YELLOW);
-//        g.draw(translatedTest);
-        ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").put("object", translatedTest);
+//        g.draw(translatedRectangle);
+
+        ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").put("object", translatedRectangle);
+        ObjectStack.reservoirsDetection.put(reservoir, translatedRectangle);
+
+
 
 
     }
@@ -112,29 +117,35 @@ public class DrawNetworkComponents {
         int valveWidth = 50;
         int valveHeight = 50;
 
-        g.setColor(new Color(255, 215, 0));
+        g.setColor(new Color(142, 201, 255));
 
 
 //        if (pipe == Main.currentlySelectedValve)
 //            g.setColor(new Color(255, 20, 200));
-
-        if ((ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected")) != null &&
-                (boolean) (ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("valve").get("selected"))) {
-            //System.out.println("SELECTED");
-            g.setColor(new Color(255, 20, 200));
-        }
-
 
         Ellipse2D valve = new Ellipse2D.Double(
                 (int) (Translator.getInstance().getTranslatedX(pipe.start.position.getX() + vector.getX()) - valveWidth / 2 + reservoirWidth / 2),
                 (int) (Translator.getInstance().getTranslatedY(pipe.start.position.getY() + vector.getY()) - valveHeight / 2 + reservoirHeight / 2),
                 valveWidth,
                 valveHeight);
+
+        if ((ObjectStack.valves.get(pipe)) != null){
+            if(Main.currentlySelectedValve == pipe)
+            {
+                Ellipse2D selectionCircle = new Ellipse2D.Double(valve.getX() - 5, valve.getY() - 5, valve.getWidth() + 10, valve.getHeight() + 10);
+                g.setColor(new Color(255, 34, 0));
+                g.fill(selectionCircle);
+                g.setColor(new Color(142, 201, 255));
+            }
+
+
+        }
+
         g.fill(valve);
 
         //addin' valve to catalog
         ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("valve").put("object", valve);
-
+        ObjectStack.valves.put(pipe, valve);
 
         Shape c = g.getClip();
 
@@ -173,12 +184,11 @@ public class DrawNetworkComponents {
      */
     public void drawArrows(Pipe pipe, int reservoirWidth, int reservoirHeight)
     {
-
         Point2D vector;
         Point2D arrowStart;
         Point2D arrowEnd;
         Point2D middle;
-        int circleSize = 100;
+        int circleSize;
 
         g.setStroke(new BasicStroke(2));
         vector = new Point2D.Double(
@@ -227,13 +237,12 @@ public class DrawNetworkComponents {
 
         circleSize = ((int) Math.sqrt(vx * vx + vy * vy)) + 20;
 
-
-        //TODO: add dynamic circle size for better clicking experience
         Ellipse2D detectionCircle = new Ellipse2D.Double((int) middle.getX(),(int) middle.getY(),circleSize,circleSize);
         detectionCircle = new Ellipse2D.Double(detectionCircle.getX() - circleSize/2, detectionCircle.getY() - circleSize/2, circleSize,circleSize);
 
         g.drawOval((int)detectionCircle.getX(), (int)detectionCircle.getY(), circleSize,circleSize);
         ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("arrow").put("detection", detectionCircle);
+        ObjectStack.arrows.put(pipe, detectionCircle);
 
     }
 

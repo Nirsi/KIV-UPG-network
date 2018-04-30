@@ -11,9 +11,11 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.Buffer;
 
 import org.jfree.chart.*;
 
@@ -23,6 +25,9 @@ public class Main {
     private static JPanel toolPanel;
     private static JFrame frame;
     private static WaterNetwork waterNetwork;
+    public static Pipe currentlySelectedValve;
+    public static JSlider slider;
+    public static JDialog graphWindow;
 
     /**
      * Entry point of program
@@ -181,11 +186,43 @@ public class Main {
             //endregion
         });
 
+        btPngExport.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                ExportAsPng();
+
+            }
+            //region USELESS METHODS HERE
+
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+
+            //endregion
+        });
+
     }
 
-    private static void ExportToPng()
+    private static void ExportAsPng()
     {
-        BufferedImage bufferedImage = new BufferedImage(640,480,0);
+        BufferedImage bufferedImage = new BufferedImage(mainPanel.getWidth(),mainPanel.getHeight(),BufferedImage.TYPE_INT_RGB);
         Graphics2D g2 = bufferedImage.createGraphics();
         mainPanel.drawWith(g2);
 
@@ -196,7 +233,7 @@ public class Main {
             try {
                 if (ImageIO.write(bufferedImage, "png", file))
                 {
-                    System.out.println("-- saved");
+                    System.out.println("File saved");
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -207,9 +244,10 @@ public class Main {
 
     private static void ExportAsSvg()
     {
-        SVGGraphics2D svgGraphics2D = new SVGGraphics2D(640, 480);
+        SVGGraphics2D svgGraphics2D = new SVGGraphics2D(mainPanel.getWidth(), mainPanel.getHeight());
         mainPanel.drawWith(svgGraphics2D);
         String input = svgGraphics2D.getSVGElement();
+        System.out.println(input);
 
         JFileChooser fileChooser = new JFileChooser();
         if (fileChooser.showSaveDialog(frame) == JFileChooser.APPROVE_OPTION)
@@ -217,15 +255,14 @@ public class Main {
             File file = fileChooser.getSelectedFile();
 
             try {
-                FileWriter writer = new FileWriter(file);
+                BufferedWriter writer = new BufferedWriter(new FileWriter(file));
                 writer.write(input);
+                writer.close();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
 
-    public static Pipe currentlySelectedValve;
-    public static JSlider slider;
-    public static JDialog graphWindow;
+
 }
