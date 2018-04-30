@@ -45,7 +45,6 @@ public class DrawNetworkComponents {
 //        g.setColor(Color.YELLOW);
 //        g.draw(translatedRectangle);
 
-        ComponentCatalog.getInstance().nestInto("reservoirs").nestInto(reservoir).nestInto("reservoir").put("object", translatedRectangle);
         ObjectStack.reservoirsDetection.put(reservoir, translatedRectangle);
 
 
@@ -144,7 +143,6 @@ public class DrawNetworkComponents {
         g.fill(valve);
 
         //addin' valve to catalog
-        ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("valve").put("object", valve);
         ObjectStack.valves.put(pipe, valve);
 
         Shape c = g.getClip();
@@ -241,7 +239,6 @@ public class DrawNetworkComponents {
         detectionCircle = new Ellipse2D.Double(detectionCircle.getX() - circleSize/2, detectionCircle.getY() - circleSize/2, circleSize,circleSize);
 
         g.drawOval((int)detectionCircle.getX(), (int)detectionCircle.getY(), circleSize,circleSize);
-        ComponentCatalog.getInstance().nestInto("pipes").nestInto(pipe).nestInto("arrow").put("detection", detectionCircle);
         ObjectStack.arrows.put(pipe, detectionCircle);
 
     }

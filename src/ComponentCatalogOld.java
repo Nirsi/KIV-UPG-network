@@ -1,19 +1,19 @@
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class ComponentCatalog {
-    private static ComponentCatalog singleton;
+public class ComponentCatalogOld {
+    private static ComponentCatalogOld singleton;
     private HashMap<String, Object> components = new HashMap<>();
     //    private HashMap currentNest = components;
     private String currentNest = "";
 
-    private ComponentCatalog() {
+    private ComponentCatalogOld() {
 
     }
 
-    public static ComponentCatalog getInstance() {
+    public static ComponentCatalogOld getInstance() {
         if (singleton == null) {
-            singleton = new ComponentCatalog();
+            singleton = new ComponentCatalogOld();
         }
 
         return singleton;
@@ -43,7 +43,7 @@ public class ComponentCatalog {
         return res;
     }
 
-    public ComponentCatalog nestInto(Object key) {
+    public ComponentCatalogOld nestInto(Object key) {
 //        if (currentNest.get(key) == null) {
 //            currentNest.put(key, new HashMap<>());
 //        }
