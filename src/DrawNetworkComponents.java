@@ -36,13 +36,10 @@ public class DrawNetworkComponents {
         // Case of Reservoir
         g.setColor(Color.BLACK);
         g.setStroke(new BasicStroke(3));
-//        Rectangle2D test = new Rectangle2D.Double(0, 0, width, height);
         g.drawRect(0,0,width,height);
 
         g.setTransform(baseTransform);
         Rectangle2D translatedRectangle = new Rectangle2D.Double(Translator.getInstance().getTranslatedX(reservoir.position.getX()),Translator.getInstance().getTranslatedY(reservoir.position.getY()),width,height);
-//        g.setColor(Color.YELLOW);
-//        g.draw(translatedRectangle);
 
         ComponentCatalog.reservoirsDetection.put(reservoir, translatedRectangle);
 
@@ -227,7 +224,7 @@ public class DrawNetworkComponents {
             drawArrow((int) arrowEnd.getX(), (int) arrowStart.getX(), (int) arrowEnd.getY(), (int) arrowStart.getY(), 15);
         }
 
-        //Testing to draw circles
+        //Computing detection circle size
 
         double vx = arrowStart.getX() - arrowEnd.getX();
         double vy = arrowStart.getY() - arrowEnd.getY();
@@ -236,8 +233,6 @@ public class DrawNetworkComponents {
 
         Ellipse2D detectionCircle = new Ellipse2D.Double((int) middle.getX(),(int) middle.getY(),circleSize,circleSize);
         detectionCircle = new Ellipse2D.Double(detectionCircle.getX() - circleSize/2, detectionCircle.getY() - circleSize/2, circleSize,circleSize);
-
-        g.drawOval((int)detectionCircle.getX(), (int)detectionCircle.getY(), circleSize,circleSize);
         ComponentCatalog.arrows.put(pipe, detectionCircle);
 
     }

@@ -13,9 +13,8 @@ import java.awt.event.MouseListener;
 
 public class MainPanel extends JPanel {
     private WaterNetwork wn;
-    private int reservoirWidth = 150;
-    private int reservoirHeight = 150;
-    private JFreeChart lineChart;
+    private int reservoirWidth;
+    private int reservoirHeight;
 
     //private Pipe currentlySelected;
 
@@ -155,6 +154,7 @@ public class MainPanel extends JPanel {
 
             if (ComponentCatalog.pipeGraphs.get(p) == null) {
                 ComponentCatalog.pipeGraphs.put(p, new XYSeries("flow"));
+                System.out.println("Generated new XYSeries");
             }
             (ComponentCatalog.pipeGraphs.get(p)).add(wn.currentSimulationTime(), Math.abs(p.flow));
         }

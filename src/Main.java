@@ -35,7 +35,6 @@ public class Main {
         frame.setLayout(new BorderLayout());
 
         mainPanel = new MainPanel(waterNetwork, Integer.parseInt(args[0]));
-        //mainPanel.setPreferredSize(new Dimension(800,800));
         mainPanel.setMinimumSize(new Dimension(800, 800));
 
 
