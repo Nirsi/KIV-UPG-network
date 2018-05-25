@@ -28,13 +28,13 @@ public class Main {
      * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
-        waterNetwork = new WaterNetwork(3);
+        waterNetwork = new WaterNetwork(2);
 
         frame = new JFrame();
         frame.setPreferredSize(new Dimension(1100, 800));
         frame.setLayout(new BorderLayout());
 
-        mainPanel = new MainPanel(waterNetwork, Integer.parseInt(args[0]));
+        mainPanel = new MainPanel(waterNetwork, Integer.parseInt("150"));
         mainPanel.setMinimumSize(new Dimension(800, 800));
 
 
