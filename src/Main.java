@@ -28,7 +28,7 @@ public class Main {
      * @throws InterruptedException
      */
     public static void main(String[] args) throws InterruptedException {
-        waterNetwork = new WaterNetwork(2);
+        waterNetwork = new WaterNetwork(3);
 
         frame = new JFrame();
         frame.setPreferredSize(new Dimension(1100, 800));
@@ -36,6 +36,7 @@ public class Main {
 
         mainPanel = new MainPanel(waterNetwork, Integer.parseInt("150"));
         mainPanel.setMinimumSize(new Dimension(800, 800));
+        mainPanel.setBackground(new Color(50,50,50));
 
 
         slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);

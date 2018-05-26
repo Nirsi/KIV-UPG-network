@@ -1,5 +1,4 @@
-public class Translator
-{
+public class Translator {
     private static Translator Instance;
 
     private double translatedWidth;
@@ -8,40 +7,52 @@ public class Translator
     private double virtualWidth;
     private double virtualHeight;
 
+    private double X;
+    private double Y;
+
+    private double maxX;
+    private double maxY;
+
 
     /**
      * Returns instance of singleton
+     *
      * @return new Translator
      */
-    public static Translator getInstance()
-    {
-        if (Instance == null)
+    public static Translator getInstance() {
+        if (Instance == null) {
             Instance = new Translator();
+        }
         return Instance;
     }
 
     /**
      * Returns real X for drawing
+     *
      * @param x
      * @return double
      */
-    public double getTranslatedX(double x)
-    {
-        return translatedWidth / virtualWidth * x;
+    public double getTranslatedX(double x) {
+        X = translatedWidth / virtualWidth * x;
+
+        return X;
     }
 
     /**
      * Returns real Y for drawing
+     *
      * @param y
      * @return
      */
-    public double getTranslatedY(double y)
-    {
-        return translatedHeight / virtualHeight * y;
+    public double getTranslatedY(double y) {
+        Y = translatedHeight / virtualHeight * y;
+
+        return Y;
     }
 
     /**
      * Sets width of real window
+     *
      * @param translatedWidth
      */
     public void setTranslatedWidth(double translatedWidth) {
@@ -50,6 +61,7 @@ public class Translator
 
     /**
      * Sets height of real window
+     *
      * @param translatedHeight
      */
     public void setTranslatedHeight(double translatedHeight) {
@@ -58,6 +70,7 @@ public class Translator
 
     /**
      * Sets width of virtual window
+     *
      * @param virtualWidth
      */
     public void setVirtualWidth(double virtualWidth) {
@@ -66,6 +79,7 @@ public class Translator
 
     /**
      * Sets ¨height of virtual window
+     *
      * @param virtualHeight
      */
     public void setVirtualHeight(double virtualHeight) {

@@ -124,9 +124,14 @@ public class MainPanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
+        int temp;
+        if (getWidth() > getHeight())
+            temp = getHeight();
+        else
+            temp = getWidth();
 
-        Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
-        Translator.getInstance().setTranslatedHeight(getHeight() - reservoirWidth);
+        Translator.getInstance().setTranslatedWidth(temp - reservoirWidth);
+        Translator.getInstance().setTranslatedHeight(temp - reservoirWidth);
 
         DrawNetworkComponents drawNetworkComponents = new DrawNetworkComponents(g2);
 
@@ -175,11 +180,11 @@ public class MainPanel extends JPanel {
             if (!(nn instanceof Reservoir)) {
 
                 //"oprava špatného vykreslení při změně GlyphSize"
-                Translator.getInstance().setTranslatedWidth(getWidth() - 150);
-                Translator.getInstance().setTranslatedHeight(getHeight() - 150);
+//                Translator.getInstance().setTranslatedWidth(getWidth() - 150);
+//                Translator.getInstance().setTranslatedHeight(getHeight() - 150);
                 drawNetworkComponents.drawNodes(nn, 50, 50);
-                Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
-                Translator.getInstance().setTranslatedHeight(getHeight() - reservoirWidth);
+//                Translator.getInstance().setTranslatedWidth(getWidth() - reservoirWidth);
+//                Translator.getInstance().setTranslatedHeight(getHeight() - reservoirWidth);
             }
         }
     }
