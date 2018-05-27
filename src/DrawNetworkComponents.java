@@ -279,8 +279,17 @@ public class DrawNetworkComponents {
      */
     private void drawTexts(Pipe pipe, Point2D arrowStart, Point2D arrowEnd) {
 
-        int vx = (int) (arrowEnd.getX() - arrowStart.getX());
-        int vy = (int) (arrowEnd.getY() - arrowStart.getY());
+        double vx = arrowEnd.getX() - arrowStart.getX();
+        double vy = arrowEnd.getY() - arrowStart.getY();
+        double vLength = Math.sqrt((vx * vx) + (vy * vy));
+//        System.out.println("1: " + vx + " " + vy);
+        vx = vx / vLength;
+        vy = vy / vLength;
+//        System.out.println("2: " + vx + " " + vy);
+
+        vx = vx * 40;
+        vy = vy * 60;
+//        System.out.println("3: " + vx + " " + vy);
 
         Point2D normalVector = new Point2D.Double(
                 -vy + arrowStart.getX(),

@@ -36,6 +36,7 @@ public class Main {
 
         mainPanel = new MainPanel(waterNetwork, Integer.parseInt(args[0]));
         mainPanel.setMinimumSize(new Dimension(800, 800));
+        //mainPanel.setBackground(new Color(50,50,50));
 
 
         slider = new JSlider(JSlider.HORIZONTAL, 0, 100, 50);
